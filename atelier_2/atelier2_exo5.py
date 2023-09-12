@@ -1,34 +1,51 @@
 from collections import Counter
 
 
-def placer_objets_vitrines(nbEmplacements: int, lObjets: list)->list:
-    # Compter le nombre d'occurrences de chaque objet
-    objet_counts = Counter(lObjets)
+def vitrines(nbEmplacements: int, lObjet: list)->list:
+    """
+    Cette fonction renvoie deux listes correspondants a deux vitrines avec des objets different 
+    pour chaque vitrines.
+
+    Args:
+        nbEmplacements (int): Un nombre entier
+        lObjet (list): Une liste d'entier
+
+    Returns:
+        list: Deux listes d'entiers 
+    """
+
+    nbr_occurrence = Counter(lObjet)
+    print(nbr_occurrence)
 
     # Initialiser les deux vitrines vides
-    vitrine1 = []
-    vitrine2 = []
+    vitrineUn = []
+    vitrineDeux = []
+    repetition = list(nbr_occurrence.values())
+    
+    if all(j <= 2 for j in repetition):
+        Test = True
+    else:
+        Test = False
 
-    # Remplir la première vitrine avec des objets distincts autant que possible
-    for objet, count in objet_counts.items():
-        if count > 0 and len(vitrine1) < nbEmplacements:
-            vitrine1.extend([objet] * min(count, nbEmplacements - len(vitrine1)))
+    if Test == True:
+        if len(lObjet) < nbEmplacements * 2:
+            # Remplir la première vitrine avec des objets distincts autant que possible
+            for i in range(len(lObjet)):
+                if len(vitrineUn) <= len(vitrineDeux) and len(vitrineUn) < nbEmplacements and lObjet[i] not in vitrineUn :
+                    vitrineUn.append(lObjet[i])
+                elif lObjet[i] not in vitrineDeux:
+                    vitrineDeux.append(lObjet[i])
 
-    # Remplir la deuxième vitrine avec les objets restants de la même manière
-    for objet, count in objet_counts.items():
-        if count > 0 and len(vitrine2) < nbEmplacements:
-            vitrine2.extend([objet] * min(count, nbEmplacements - len(vitrine2)))
+            print(vitrineUn, vitrineDeux)
+        else:
+            print("La liste comporte trop d'élements par rapport au nombre d'emplacement")
+    else:
+        print("Erreur seulement 2 objets identiques")
+            
 
-    return (vitrine1, vitrine2)
+
+lObjets = [1, 2, 2, 3, 4, 5, 6, 5, 6 ,7]
+print(vitrines(7, lObjets))
 
 
-    # Exemple d'utilisation
-nbEmplacements = 4
-lObjets = [1, 2, 2, 3, 4, 5, 5]
-resultat = placer_objets_vitrines(nbEmplacements, lObjets)
-if resultat:
-    print("Configuration des vitrines:")
-    print("Vitrine 1:", resultat[0])
-    print("Vitrine 2:", resultat[1])
-else:
-    print("Impossible de placer les objets dans les vitrines.")
+
