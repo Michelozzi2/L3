@@ -91,7 +91,7 @@ def AffichageHisto(F:list)->str:
 
 
 def test():
-
+    list = []
     list_test = [6,5,6,8,4,2,1,5]
     list_test2 = [3,0,6,7,4,2,1,5]
     list_test3 = [1 ,5 ,5 ,5 ,9 ,11 ,11 ,15 ,15 ,15 ,15]
