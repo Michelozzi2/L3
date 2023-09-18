@@ -24,10 +24,10 @@ def full_name(str_arg: str) -> str:
 def full_name2(str_arg: str) -> str:
     counter = 0
     nom = ""
-    longueur_liste = len(str_arg)
+    longueur_mot = len(str_arg)
     ascii = 32
 
-    while counter < longueur_liste and str_arg[counter] != " ":
+    while counter < longueur_mot and str_arg[counter] != " ":
         nom += chr(ord(str_arg[counter]) - ascii)
         counter += 1
     return nom + " " + chr(ord(str_arg[counter:][1]) - ascii) + str_arg[counter+2:]
