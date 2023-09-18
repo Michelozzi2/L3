@@ -137,4 +137,3 @@ def test_exercice():
    
 
 test_exercice()
-zfezf
