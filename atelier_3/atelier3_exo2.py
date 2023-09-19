@@ -154,7 +154,7 @@ def dictionnaire(fichier: str)->list:
 #Procédure de test pour la fonction 7
 def test_dictionnaire():
     print("________________________________")
-    fichier = "littre.txt"
+    fichier = "littreUTF8.txt"
     mots = dictionnaire(fichier)
     print(mots)
 
