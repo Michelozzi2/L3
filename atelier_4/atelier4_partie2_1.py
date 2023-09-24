@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-
 # La fonction mix_list modifiée
 
 def mix_list(list_to_mix):
