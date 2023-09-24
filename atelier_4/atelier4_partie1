@@ -94,6 +94,8 @@ def test():
     #est vérifiée en mode debug (désactivable)
     assert lst_sorted != mixed_list,"Les deux listes doivent être différente après l'appel à mixList..."
     print("\n")
+
+    
 """
     # Test de votre code
     print('Liste triée de départ',lst_sorted)
