@@ -22,6 +22,8 @@ def fusion(lst1,lst2):
         return [lst2[0]] + fusion( lst1 , lst2[1:] )
 """
 
+
+
 def sort_list(liste: list)->list:
     lst2 = liste.copy()
     while liste:
@@ -32,6 +34,8 @@ def sort_list(liste: list)->list:
         liste.remove(mini)
         lst2.append(mini)
     return lst2
+
+
 
 def perf_mix(func1: callable, func2: callable, list_sizes: list, num_executions: int)->tuple:
     """_summary_
@@ -75,6 +79,8 @@ def perf_mix(func1: callable, func2: callable, list_sizes: list, num_executions:
         results_func2.append(avg_time_func2)
 
     return (results_func1, results_func2)
+
+
 
 def Test():
     #list_test = [41,17,3,4,17,51,4,-1,65]
