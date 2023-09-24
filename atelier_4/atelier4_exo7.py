@@ -139,6 +139,7 @@ def merge(left, right):
     Returns:
         list: Une nouvelle liste triée contenant les éléments des deux listes d'entrée.
     """
+    
     result = []
     i = j = 0
     
