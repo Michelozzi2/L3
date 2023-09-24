@@ -65,6 +65,7 @@ lst =  ["Paris", "Londres", "Berlin", "Rome", "Madrid", "Amsterdam", "Bruxelles"
 
 
 def runGame():
+    
 
     lst_len = len(lst)
     iRand = random.randint(0, lst_len - 1)
