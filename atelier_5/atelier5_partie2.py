@@ -28,13 +28,13 @@ print(x)
 print("\n")
 
 
-def my_searchsorted(table : object, indice : int)-> int:
+def my_searchsorted(table : object, elt : int)-> int:
     """
     Recherche un indice dans un tableau numpy.
 
     :param table: Le tableau numpy dans lequel effectuer la recherche.
 
-    :param indice: L'indice à rechercher dans le tableau.
+    :param indice: L'element à rechercher dans le tableau.
 
     :return: L'indice de l'élément recherché dans le tableau ou -1 s'il n'est pas trouvé.
 
@@ -43,7 +43,7 @@ def my_searchsorted(table : object, indice : int)-> int:
     longueur_list = len(table)
 
     for L in range(longueur_list):
-        if table[L] == indice:
+        if table[L] == elt:
             col_indice = L
             break
 
@@ -57,20 +57,20 @@ x = np.where(arr == 5)
 print(x)
 
 
-def my_where(table : object, indice : int )-> list:
+def my_where(table : object, elt : int )-> list:
     """
     Recherche un indice dans un tableau numpy et renvoie une liste des indices correspondants.
 
     :param table: Le tableau numpy dans lequel effectuer la recherche.
 
-    :param indice: L'indice à rechercher dans le tableau.
+    :param indice: L'element à rechercher dans le tableau.
 
     :return: Une liste des indices de l'élément recherché dans le tableau.
 
     """
     res =[]
     for L in range(len(table)):
-        if table[L] == indice:
+        if table[L] == elt:
             res.append(L)
     return res
    
@@ -139,7 +139,7 @@ def operation_elementaire(matrice: object) -> object:
         for col in range(len(matrice[L])):
             matrice[L, col] += 10
     print(matrice)
-    print("----")
+    print("----_----------")
 
     for L in range(len(matrice)):
         for col in range(len(matrice[L])):
@@ -317,7 +317,7 @@ def Test():
     A = np.array(([3,1],[6,4]))
     B = np.array(([1,8],[4,2]))
     print(my_add(A, B))
-    print("-------------")
+    print("------------------------------------------")
 
     #print(matrice3X3())
     test1 = matrice3X3()
