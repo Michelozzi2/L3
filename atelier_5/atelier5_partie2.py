@@ -52,7 +52,6 @@ def my_searchsorted(table : object, indice : int)-> int:
 
 
 #Exemple d’usage de la fct np.where
-import numpy as np
 arr = np.array([1, 2, 3, 4, 5, 6, 14])
 x = np.where(arr == 5)
 print(x)
