@@ -12,6 +12,8 @@ def is_sorted(lst):
     """
     return all(lst[i] <= lst[i+1] for i in range(len(lst) - 1))
 
+
+
 def stupid_sort(lst_to_sort):
     """
     Trie une liste en utilisant le tri stupide.
@@ -26,6 +28,8 @@ def stupid_sort(lst_to_sort):
         random.shuffle(lst_to_sort)
 
     return lst_to_sort
+
+
 
 
 def insertion_sort(list_to_sort):
@@ -57,6 +61,9 @@ def insertion_sort(list_to_sort):
 
     return sorted_list
 
+
+
+
 def selection_sort(lst_to_sort):
     """
     Trie une liste de nombres en utilisant l'algorithme de tri par sélection.
@@ -79,6 +86,9 @@ def selection_sort(lst_to_sort):
             result[i], result[min_index] = result[min_index], result[i]
     return result
 
+
+
+
 def bubble_sort(lst_to_sort):
     """
     Trie une liste en utilisant l'algorithme de tri à bulles.
@@ -100,6 +110,8 @@ def bubble_sort(lst_to_sort):
         if not swapped:
             # Si aucun échange n'a eu lieu pendant une itération, le tableau est trié.
             return lst_to_sort
+        
+
 
 
 def merge_sort(list_to_sort):
@@ -127,6 +139,8 @@ def merge_sort(list_to_sort):
     
     # Fusionnez les deux moitiés triées
     return merge(left_sorted, right_sorted)
+
+
 
 def merge(left, right):
     """
