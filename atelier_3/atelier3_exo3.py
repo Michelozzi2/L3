@@ -23,7 +23,7 @@ def places_lettre(lettre_a_deviner : str, mot : str) -> list:
     return resultat
 
 
-def outputStr(mot, lpos):
+def outputStr(mot:str, lpos:list)->str:
     """
     Renvoie une chaîne de caractères avec certains caractères d'un mot remplacés par des tirets.
 
