@@ -167,7 +167,8 @@ def runGame():
         word_len = random.randint(min(word_dict.keys()), max(word_dict.keys()))
     
     mot_a_deviner = select_word(word_dict, word_len)
-    
+    print(mot_a_deviner)
+
     if not mot_a_deviner:
         print(f"Aucun mot trouvé pour le niveau {choice}. Sélection automatique d'un mot.")
         word_len = random.choice(list(word_dict.keys()))
@@ -178,14 +179,19 @@ def runGame():
 
     print(">> Bienvenue dans le pendu <<")
 
+    affichage = outputStr(mot_a_deviner, lettres_trouvees)
+    print("\nMot à deviner :", affichage)
+
     while tentatives > 0:
-        affichage = outputStr(mot_a_deviner, lettres_trouvees)
-        print("\nMot à deviner :", affichage)
         proposition = input("Proposez une lettre : ").lower()
 
         if proposition in mot_a_deviner:
             lettres_trouvees += places_lettre(proposition, mot_a_deviner)
             print("-> Bien vu!")
+
+            affichage = outputStr(mot_a_deviner, lettres_trouvees)
+            print("\nMot à deviner :", affichage)
+    
         else:
             tentatives -= 1
             print("-> Nope\n")
@@ -205,9 +211,9 @@ def runGame():
                 print("==============\n")
 
         if "_" not in affichage:
-            print("\n>>> Gagné! Le mot était:", mot_a_deviner, "<<<")
-            return -1
-
+                print("\n>>> Gagné! Le mot était:", mot_a_deviner, "<<<")
+                return -1
+        
     if tentatives == 0:
         print("\n>>> Perdu! Le mot était:", mot_a_deviner, "<<<")
 
