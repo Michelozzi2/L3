@@ -167,6 +167,8 @@ def  est_voisin(matrice: object, S:int , V:int)->bool:
     Returns:
         bool: True ou False
     """
+
+    
     """
     lst_arc= listeArcs(matrice)
     taille_list_arc = len(lst_arc)
