@@ -15,9 +15,9 @@ def places_lettre(lettre_a_deviner : str, mot : str) -> list:
     Returns:
         list: Une liste d'entiers représentant les indices des occurrences de la lettre dans le mot.
     """
-    longueur_liste = len(mot)
+    longueur_mot = len(mot)
     resultat = []
-    for i in range(longueur_liste):
+    for i in range(longueur_mot):
         if mot[i] == lettre_a_deviner:
             resultat.append(i)
     return resultat
@@ -64,12 +64,114 @@ lst =  ["Paris", "Londres", "Berlin", "Rome", "Madrid", "Amsterdam", "Bruxelles"
 
 
 
-def runGame():
+def build_list(fileName: str) -> list:
+    """_summary_
+
+    Fonction pour construire la liste de mots à partir d'un fichier
+
+    Args:
+        fileName (str): Le fichier.txt
+
+    Returns:
+        list: La liste des capitales
+    """
+    words = []
+    try:
+        with open(fileName, "r") as file:
+            lines = file.readlines()
+            for line in lines:
+                # Supprimer les espaces et les sauts de ligne
+                word = line.strip()
+                if word:
+                    words.append(word.lower())
+    except FileNotFoundError:
+        print(f"Le fichier '{fileName}' n'a pas été trouvé.")
+    return words
+
+
+
+
+
+def build_dict(lst: list) -> dict:
+    """_summary_
+
+    Fonction pour construire un dictionnaire de mots en fonction de leur longueur(a partir des clées)
+
+    Args:
+        lst (list): La liste des capitales issue de la fonction build_list
+
+    Returns:
+        dict: Un dictionnaire avec des mots organisées en fonction des clées qui representent la longueur
+        de ces memes mots
+    """
+    word_dict = {}
+    for word in lst:
+        length = len(word)
+        if length not in word_dict:
+            word_dict[length] = []
+        word_dict[length].append(word)
+    return word_dict
+
+
+
+
+
+def select_word(sorted_words: dict, word_len: int) -> str:
+    """_summary_
+    Cette fonction selectionne un mot aleatoire en fonction de la cle(qui represente la longueur du mot) 
+    dans le dictionnaire envoyé
+
+    Args:
+        sorted_words (dict): Le dictionnaire le capitales en fonctions des longueurs des mots(clés)
+        word_len (int): Un entier qui represente la longueur du mot
+
+    Returns:
+        str: un string (le mot choisi aleatoirement en fonction de la clée)
+    """
+    
+    if word_len in sorted_words:
+        return random.choice(sorted_words[word_len])
+    else:
+        return ""
     
 
-    lst_len = len(lst)
-    iRand = random.randint(0, lst_len - 1)
-    mot_a_deviner = lst[iRand].lower()
+
+
+
+def runGame():
+    fileName = "./atelier_3/capitales.txt"
+    words = build_list(fileName)
+    
+    if not words:
+        print("Aucun mot trouvé dans le fichier.")
+        return 1
+    
+    word_dict = build_dict(words)
+    
+    # Proposez à l'utilisateur de choisir un niveau de difficulté
+    print("Choisissez un niveau de difficulté :")
+    print("1. Facile (taille du mot < 7)")
+    print("2. Normal (6 < taille du mot < 9)")
+    print("3. Difficile (taille du mot > 8)")
+    
+    choice = input("Entrez le numéro du niveau : ")
+    
+    if choice == '1':
+        word_len = random.randint(min(word_dict.keys()), 6)
+    elif choice == '2':
+        word_len = random.randint(7, 8)
+    elif choice == '3':
+        word_len = random.randint(9, max(word_dict.keys()))
+    else:
+        print("Choix invalide. Sélection automatique d'un niveau.")
+        word_len = random.randint(min(word_dict.keys()), max(word_dict.keys()))
+    
+    mot_a_deviner = select_word(word_dict, word_len)
+    
+    if not mot_a_deviner:
+        print(f"Aucun mot trouvé pour le niveau {choice}. Sélection automatique d'un mot.")
+        word_len = random.choice(list(word_dict.keys()))
+        mot_a_deviner = select_word(word_dict, word_len)
 
     tentatives = 7
     lettres_trouvees = []
@@ -79,7 +181,7 @@ def runGame():
     while tentatives > 0:
         affichage = outputStr(mot_a_deviner, lettres_trouvees)
         print("\nMot à deviner :", affichage)
-        proposition = input("Proposez une lettre : ")[0].lower()
+        proposition = input("Proposez une lettre : ").lower()
 
         if proposition in mot_a_deviner:
             lettres_trouvees += places_lettre(proposition, mot_a_deviner)
@@ -104,37 +206,15 @@ def runGame():
 
         if "_" not in affichage:
             print("\n>>> Gagné! Le mot était:", mot_a_deviner, "<<<")
-            break
+            return -1
 
     if tentatives == 0:
         print("\n>>> Perdu! Le mot était:", mot_a_deviner, "<<<")
 
     print("\n    * Fin de la partie *    ")
 
-runGame()
+def main():
 
+    runGame()
 
-
-def test_exercice():
-    
-    """
-    #Test 1
-    lettre_a_deviner = input("Entrez un caractère : ")
-    mot = input("Entrez un mot : ")
-    indices = places_lettre(lettre_a_deviner, mot)
-    if indices:
-        print(f"Le caractère '{lettre_a_deviner}' se trouve à l'indice(s) {indices} dans le mot '{mot}'.")
-    else:
-        print(f"Le caractère '{lettre_a_deviner}' n'est pas présent dans le mot '{mot}'.")
-    
-
-    #Test 2
-    print(outputStr('bonjour', []))        # '_ _ _ _ _ _ _'
-    print(outputStr('bonjour', [0]))       # 'b _ _ _ _ _ _'
-    print(outputStr('bonjour', [0, 1, 4])) # 'b o _ _ o _ _'
-    print(outputStr('bon', [0, 1, 2]))     # 'b o n'
-    print(outputStr('maman', [1, 3]))      # '_ a _ a _'
-    """
-   
-
-test_exercice()
+main()
