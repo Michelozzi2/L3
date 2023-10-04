@@ -6,9 +6,9 @@ import java.util.*;
 /* 
  
 Modifier la classe De pour prendre en compte un tableau de valeurs au lieu d'un nombre de faces fixes. 
-Vous pouvez également ajouter un constructeur pour préciser les valeurs des faces du dé lors de sa création.
+On peut également ajouter un constructeur pour préciser les valeurs des faces du dé lors de sa création.
 
-Adapter la méthode lancer pour choisir une valeur aléatoire dans le tableau des valeurs pour représenter le résultat du lancer.
+Enfin il faut adapter la méthode lancer pour choisir une valeur aléatoire dans le tableau des valeurs pour représenter le résultat du lancer.
 
 
 */
@@ -182,6 +182,7 @@ public class Des {
     * actuel.
     * @return La méthode renvoie une valeur booléenne.
     */
+    /* 
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -191,6 +192,28 @@ public class Des {
         }
         Des other = (Des) obj;
         return nbFaces == other.nbFaces ;
+    }
+    */
+
+
+    /**
+     * La fonction vérifie si deux objets de type Des sont égaux en fonction de leur nombre de faces et
+     * de leur nom.
+     * 
+     * @param obj Le paramètre "obj" est un objet de type Object, qui est la superclasse de toutes les
+     * classes en Java. Il est utilisé pour comparer l'objet actuel avec un autre objet pour vérifier
+     * s'ils sont égaux.
+     * @return La méthode renvoie une valeur booléenne.
+     */
+    public boolean equals(Object obj) {
+
+        boolean result = false;
+        if((obj != null) && (obj instanceof Des)) {
+            Des other = (Des) obj;
+            result = ((this.nbFaces == other.nbFaces)&&(this.nomDes.equals(other.nomDes)));
+        }
+        return result;
+
     }
 
     
