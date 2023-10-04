@@ -64,6 +64,20 @@ public class Des {
     }
 
 
+
+
+    public Des(int nbFaces, String nom) {
+
+        this.setNbFace(nbFaces);
+        this.nomDes = nom;
+        nbDes ++;
+
+
+
+    }
+
+
+
     /**
      * La fonction définit le nombre de faces pour un objet, mais uniquement si l'entrée est comprise
      * entre une valeur minimale et maximale.
@@ -151,7 +165,7 @@ public class Des {
         int meilleurLancer = lancer(); // Premier lancer pour initialiser le meilleur résultat
 
         for (int i = 1; i < nb; i++) {
-            int lancerActuel = lancer();
+            int lancerActuel = this.lancer();
             if (lancerActuel > meilleurLancer) {
                 meilleurLancer = lancerActuel;
             }

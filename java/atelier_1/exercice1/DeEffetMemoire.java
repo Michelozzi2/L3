@@ -5,7 +5,7 @@ public class DeEffetMemoire extends Des {
 
     // Constructeur pour un dé à effet mémoire
     public DeEffetMemoire(int nbFaces, String nom) {
-        super(nbFaces);
+        super(nbFaces, nom);
     }
 
     // Surcharge de la méthode lancer pour un dé à effet mémoire
