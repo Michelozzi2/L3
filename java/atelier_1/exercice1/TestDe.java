@@ -38,6 +38,10 @@ public class TestDe {
         for (int i = 0; i < 10; i++) {
             System.out.println(deMemoire.getNom() + " a été lancé : " + deMemoire.lancer());
         }
+
+
+
+        System.out.println("d1 == d2 : " + de1.equals(de2));
     }
 
         
