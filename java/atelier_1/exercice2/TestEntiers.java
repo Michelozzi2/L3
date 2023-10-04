@@ -19,7 +19,7 @@ public class TestEntiers {
         System.out.println("Entier2 après incrémentation de 5: " + entier2); // Devrait afficher "Entier2: 10"
 
         // Test de la classe EntierFou
-        EntierFou entierFou1 = new EntierFou(0, 20, 3);
+        EntierFou entierFou1 = new EntierFou(0, 20, 6);
         System.out.println("EntierFou1: " + entierFou1);
 
         for (int i = 0; i < 5; i++) {

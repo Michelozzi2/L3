@@ -18,11 +18,5 @@ public class DeEffetMemoire extends Des {
         return resultat;
     }
 
-    public static void main(String[] args) {
-        // Testez la classe DeEffetMemoire
-        DeEffetMemoire deMemoire = new DeEffetMemoire(6, "Dé à effet mémoire");
-        for (int i = 0; i < 10; i++) {
-            System.out.println(deMemoire.getNom() + " a été lancé : " + deMemoire.lancer());
-        }
-    }
+
 }
