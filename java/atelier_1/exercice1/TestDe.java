@@ -39,8 +39,6 @@ public class TestDe {
             System.out.println(deMemoire.getNom() + " a été lancé : " + deMemoire.lancer());
         }
 
-
-
         System.out.println("d1 == d2 : " + de1.equals(de2));
     }
 

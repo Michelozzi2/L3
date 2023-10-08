@@ -2,16 +2,13 @@ package atelier_1.exercice1;
 import java.util.*;
 
 
-
 /* 
- 
 Modifier la classe De pour prendre en compte un tableau de valeurs au lieu d'un nombre de faces fixes. 
 On peut également ajouter un constructeur pour préciser les valeurs des faces du dé lors de sa création.
 
 Enfin il faut adapter la méthode lancer pour choisir une valeur aléatoire dans le tableau des valeurs pour représenter le résultat du lancer.
-
-
 */
+
 
 /**
  * La classe "Des" représente un dé avec un nombre spécifié de faces et fournit des méthodes pour
@@ -21,12 +18,12 @@ public class Des {
    
     private String nomDes = "De";
     private int nbFaces;
-    private final static int minFaces = 3 , maxFaces = 120;
+    private final static int MINFACES = 3 , MAXFACES = 120;
     private static int nbDes = 0;
     private static Random r = new Random();
     
-
     // Le code `public Des(){ this.nbFaces = 6; nbDes ++; }` est un constructeur pour la classe `Des`.
+    // Il initialise la variable `nbFaces` à 6 et incrémente la variable `nbDes`.
     public Des(){
         this.nbFaces = 6;
         nbDes ++;
@@ -46,17 +43,14 @@ public class Des {
     }
 
 
-
-
-
-   // Le code `public Des(String nomDes){ this.nomDes = nomDes; this.nbFaces = maxFaces; nomDes +=
+   // Le code `public Des(String nomDes){ this.nomDes = nomDes; this.nbFaces = MAXFACES; nomDes +=
    // nbDes; nbDes ++; }` est un constructeur pour la classe `Des`. Il prend un paramètre `nomDes` et
    // l'assigne à la variable d'instance `nomDes`. Il définit également le nombre de faces des dés au
-   // nombre maximum de faces (« maxFaces »). De plus, il ajoute la valeur de « nbDes » à la chaîne «
+   // nombre maximum de faces (« MAXFACES »). De plus, il ajoute la valeur de « nbDes » à la chaîne «
    // nomDes » et incrémente la variable « nbDes ».
     public Des(String nomDes){
         this.nomDes = nomDes;
-        this.nbFaces = maxFaces;
+        this.nbFaces = MAXFACES;
         
         nomDes += nbDes;
         nbDes ++;
@@ -64,18 +58,17 @@ public class Des {
     }
 
 
-
-
+    // Le code `public Des(int nbFaces, String nom) { this.setNbFace(nbFaces); this.nomDes = nom; nbDes
+    // ++; }` est un constructeur pour la classe `Des`. Il prend deux paramètres, `nbFaces` et `nom`,
+    // et définit le nombre de faces des dés à l'aide de la méthode `setNbFace`. Il attribue également
+    // la valeur de « nom » à la variable d'instance « nomDes ». Enfin, il incrémente la variable
+    // `nbDes`.
     public Des(int nbFaces, String nom) {
 
         this.setNbFace(nbFaces);
         this.nomDes = nom;
         nbDes ++;
-
-
-
     }
-
 
 
     /**
@@ -86,14 +79,13 @@ public class Des {
      */
     public void setNbFace(int nbFaces){
 
-        if(nbFaces >= minFaces && nbFaces <= maxFaces){
+        if(nbFaces >= MINFACES && nbFaces <= MAXFACES){
             this.nbFaces = nbFaces;
         }
         else{
             System.err.println("Nombre pas compris entre 3 et 120");
         }
     }
-
 
 
     /**
@@ -106,8 +98,6 @@ public class Des {
     }
 
 
-
-
     /**
      * La fonction "getNom" renvoie la valeur de la variable "nomDes" sous forme de chaîne.
      * 
@@ -116,8 +106,6 @@ public class Des {
     public String getNom(){
         return nomDes;
     }
-
-
 
 
     // Getter pour le nombre de dés créés
@@ -129,8 +117,6 @@ public class Des {
     public static int getNombreDesCrees() {
         return nbDes;
     }
-
-
 
 
     /**
@@ -145,7 +131,6 @@ public class Des {
         return nbAleatoire;
 
     }
-
 
 
     // Méthode pour lancer le dé un nombre nb donné de fois et retourner le meilleur résultat
@@ -173,8 +158,6 @@ public class Des {
 
         return meilleurLancer;
     }
-
-
 
 
    /**
@@ -208,7 +191,6 @@ public class Des {
         return nbFaces == other.nbFaces ;
     }
     */
-
 
     /**
      * La fonction vérifie si deux objets de type Des sont égaux en fonction de leur nombre de faces et

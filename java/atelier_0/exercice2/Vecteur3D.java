@@ -33,7 +33,7 @@ public class Vecteur3D {
      */
     public void afficher(){
 
-        System.out.println("<"+ x + "," + y + "," + z + "     >");
+        System.out.println("<"+ x + "," + y + "," + z + ">");
        
 
     }

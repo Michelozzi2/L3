@@ -52,7 +52,7 @@ a) L'instruction int x = Math.max(5);n'est pas correcte au niveau syntaxique,
 car la méthode max nécessite deux arguments. Vous devez définir deux valeurs pour obtenir le maximum entre elles. 
 
 b) L'instruction int x = Math.max(5, 6);est correcte. 
-La valeur finale de la variable xsera 6, car c'est le maximum entre 5 et 6.
+La valeur finale de la variable x sera 6, car c'est le maximum entre 5 et 6.
 
 
 Question3.2)
