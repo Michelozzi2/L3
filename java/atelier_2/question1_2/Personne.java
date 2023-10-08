@@ -1,4 +1,4 @@
-package atelier_2.question1;
+package atelier_2.question1_2;
 
 import java.util.*;
 
@@ -11,6 +11,7 @@ public class Personne{
     private final GregorianCalendar dateNaissance;
     private Adresse adresse=ADRESSE_INCONNUE;
 	private static int nbPersonne = 0;
+	private static boolean resFinal = false;
 	
 	/**
 	 * Constructeur de Personne
@@ -40,7 +41,7 @@ public class Personne{
 	 * @param ville la ville ou la personne habite
 	 */
 	public Personne(String leNom,String lePrenom, int j, int m, int a, int numero, String rue, String code_postal, String ville){
-		this(leNom, lePrenom, new GregorianCalendar(a,m,j),new Adresse(numero,rue,code_postal,ville));
+		this(leNom, lePrenom, new GregorianCalendar(j,m,a),new Adresse(numero,rue,code_postal,ville));
 		
 	}
 
@@ -88,6 +89,44 @@ public class Personne{
 		"-"+ dateNaissance.get(Calendar.MONTH)   +  "-"  +  dateNaissance.get(Calendar.YEAR)  +  "\n" +   "Adresse : "+ adresse.toString() 
 		+  "\n"  + "Nombre de peronne : " + nbPersonne ;
 		return result;
+	}
+
+
+	/**
+	 * La fonction vérifie si deux objets Personne sont égaux en comparant leurs attributs nom, prenom et
+	 * dateNaissance.
+	 * 
+	 * @param obj Le paramètre obj est un objet dont nous comparons l'égalité avec l'objet actuel.
+	 * @return La méthode renvoie une valeur booléenne.
+	 */
+	public boolean equals(Object obj) {
+
+        boolean result = false;
+        if((obj != null) && (obj instanceof Personne)) {
+            Personne other = (Personne) obj;
+            result = ((this.nom == other.nom)&&(this.prenom.equals(other.prenom)&&(this.dateNaissance.equals(other.dateNaissance))));
+        }
+        return result;
+
+    }
+
+
+	// La méthode `plusAgee` compare les dates de naissance de deux objets `Personne`. Il utilise la
+	// méthode `compareTo` de la classe `GregorianCalendar` pour comparer les dates de naissance.
+	public boolean plusAgee(Personne jPersonne) {
+		int res = this.dateNaissance.compareTo(jPersonne.dateNaissance);
+
+		if(res == 0) {
+			resFinal = false;
+		}
+		else if(res == 1) {
+			resFinal = false;
+		}
+		else if(res == -1) {
+			resFinal = true;
+		}
+		return resFinal;
+
 	}
 }
 

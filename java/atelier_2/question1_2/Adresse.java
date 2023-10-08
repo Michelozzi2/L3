@@ -1,4 +1,4 @@
-package atelier_2.question1;
+package atelier_2.question1_2;
 
 /*
  * University of Corsica
@@ -127,4 +127,6 @@ public class Adresse {
 		result.append(ville);
 		return result.toString();
 	}
+
+
 }
