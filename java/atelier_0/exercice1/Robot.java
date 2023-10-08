@@ -7,6 +7,11 @@ public class Robot {
     public final static int NORD = 1, SUD = 2, EST = 3, OUEST = 4;
     static int nbRobot ;
 
+    // Le constructeur `public Robot(String nomRobot, int x, int y, int orientation)` crée une nouvelle
+    // instance de la classe `Robot` avec les paramètres donnés. Il initialise les variables d'instance
+    // `nomRobot`, `x`, `y` et `orientation` avec les valeurs correspondantes passées en arguments. Il
+    // incrémente également la variable `nbRobot` de 1 et l'ajoute à la chaîne `refRobot` pour créer
+    // une référence unique pour le robot.
     public Robot(String nomRobot, int x, int y, int orientation){
 
         this.nomRobot = nomRobot;
@@ -19,20 +24,35 @@ public class Robot {
 
     }
 
+    // L'extrait de code est un constructeur pour la classe `Robot`. Il crée une nouvelle instance de
+    // la classe `Robot` avec le paramètre `nomRobot` donné. Il initialise la variable `nomRobot` avec
+    // la valeur passée en argument, définit les coordonnées `x` et `y` à 0, incrémente la variable
+    // `nbRobot` de 1 et l'ajoute à la chaîne `refRobot` pour créer un unique référence pour le robot.
+    // Enfin, il définit la variable `orientation` à la valeur de `NORD` (qui est une constante définie
+    // dans la classe).
     public Robot(String nomRobot){
 
+        this(nomRobot, 0, 0, Robot.NORD); //(appel au constructeur precedent)
+        /* 
         this.nomRobot = nomRobot;
         this.x = 0;
         this.y = 0;
         nbRobot +=1;
         refRobot += nbRobot;
         this.orientation = NORD;
-        //this(nomRobot, x: 0,y: 0, Robot.NORD); (appel au constructeur precedent)
-
+        */
+        
+        
     }
 
 
 
+   /**
+    * La fonction modifie l'orientation d'un objet.
+    * 
+    * @param modOrientation Le paramètre modOrientation est un entier qui représente la valeur
+    * d'orientation modifiée.
+    */
     public void modificationOrientation(int modOrientation){
 
         this.orientation = modOrientation;
@@ -40,63 +60,40 @@ public class Robot {
     }
 
 
-
-
-    public void deplacer(){
-        if(orientation == NORD){
-            y+= 1;
-        }
-        else if (orientation == SUD && y > 0){
-            y-= 1;
-        }
-        else if (orientation == EST){
-            x += 1;
-        }
-        else if(orientation == OUEST && x > 0){
-            x -= 1;
-        }
-
-
-
-        if (x > 0 && y > 0  )
-        {
-            if (orientation == NORD)
-            {
-                y += 1;
-            }
-            else if (orientation == SUD)
-            {
-                y -= 1;   
-            }
-            else if (orientation == EST)
-            {
-                x += 1;
-            }
-            else if (orientation == OUEST)
-            {
-                x -= 1;
-            }
-        }
-        else
-        {
-           if (orientation == NORD)
-           {
-            y += 1;
-           }
-           else if (orientation == EST)
-           {
-            x += 1;
-           }
-           else
-           {
-            System.out.println("Erreur pas de coordonnés negatives");
-           }
+   /**
+    * La fonction "déplacer" déplace un objet dans une direction précise (NORD, EST, SUD ou OUEST) et
+    * garantit que les coordonnées ne deviennent pas négatives.
+    */
+    public void deplacer() {
+        switch (orientation) {
+            case NORD: // NORD
+                y++;
+                break;
+            case EST: // EST
+                x++;
+                break;
+            case SUD: // SUD
+                y--;
+                break;
+            case OUEST: // OUEST
+                x--;
+                break;
         }
 
+        // Vérifier que les coordonnées ne deviennent pas négatives
+        if (x < 0) {
+            x = 0;
+        }
+        if (y < 0) {
+            y = 0;
+        }
     }
 
 
-
+   /**
+    * La fonction "afficheToi" imprime le nom, la référence, les coordonnées et l'orientation d'un
+    * robot.
+    */
     public void afficheToi(){
 
         System.out.println(nomRobot +","+ refRobot);
@@ -104,12 +101,16 @@ public class Robot {
         System.out.println(y);
         System.out.println(orientation);
 
-
-
-
     }
 
 
+    /**
+     * La fonction toString() renvoie une représentation sous forme de chaîne du nom, de la position et
+     * de l'orientation du robot.
+     * 
+     * @return La méthode renvoie une représentation sous forme de chaîne du nom, de la position
+     * (coordonnées x et y) et de l'orientation du robot.
+     */
     public String toString() {
         return "Nom: " + nomRobot + ", Position X: " + x + ", Position Y: " + y + ", Orientation: " + orientation;
     }

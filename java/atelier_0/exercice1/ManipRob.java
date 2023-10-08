@@ -11,7 +11,6 @@ public class ManipRob {
         r1.modificationOrientation(Robot.SUD);
         r1.deplacer();
         
-    
 
         r2.modificationOrientation(Robot.NORD);
         r2.deplacer();
@@ -21,13 +20,10 @@ public class ManipRob {
         r3.deplacer();
         
 
-        
-
         System.out.println(r1);
         System.out.println(r2);
         System.out.println(r3);
         
-         
         
     }
 
