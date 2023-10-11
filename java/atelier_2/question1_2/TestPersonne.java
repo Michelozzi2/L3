@@ -20,8 +20,19 @@ public class TestPersonne {
         */
 
         // Création d'une personne
-        Personne personne1 = new Personne("Doe", "John", 1990, 5, 15, 123, "Main St", "12345", "City");
+        Personne personne1 = new Personne("Doe", "John", 1980, 5, 15, 123, "Main St", "12345", "City");
         System.out.println("Personne1 : " + personne1.toString());
+
+        Personne personne2 = new Personne("Michelozzi", "Matthieu", 1990, 5, 15, 123, "Main St", "12345", "City");
+        System.out.println("\n Personne2 : " + personne2.toString());
+
+        System.out.println("--------------");
+        
+         boolean compare = personne1.plusAgee(personne2);
+        System.out.println("Premiere personne plus agée que la deuxieme : "+ compare);
+        System.out.println("personne1 == personne2 : " + personne1.equals(personne2));
+
+        System.out.println("---------------");
 
         // Création d'un employé valide
         GregorianCalendar dateEmbaucheEmploye1 = new GregorianCalendar(2020, 7, 1);
@@ -30,7 +41,7 @@ public class TestPersonne {
             System.out.println("Employe1 : " + employe1.toString());
 
             // Augmentation du salaire de l'employé valide
-            employe1.augmenterLeSalaire(10);
+            employe1.augmenterLeSalaire(5);
             System.out.println("Nouveau salaire de Employe1 après augmentation : " + employe1.getSalaire());
 
             // Calcul de l'ancienneté de l'employé valide
@@ -45,9 +56,26 @@ public class TestPersonne {
         GregorianCalendar dateEmbaucheEmploye2 = new GregorianCalendar(2022, 3, 10);
         Employe employe2 = Employe.createEmploye("Young", "Joe", 2010, 2, 3, 789, "Elm St", "98765", "Village", 40000, dateEmbaucheEmploye2);
         if (employe2 != null) {
-            System.out.println("Employe2 : " + employe2.toString());
+            System.out.println(" \nEmploye2 : " + employe2.toString());
         } else {
-            System.out.println("Employe2 : Création invalide d'employé.");
+            System.out.println(" \nEmploye2 : Création invalide d'employé.");
+        }
+
+        // Création d'un manager valide
+        GregorianCalendar dateEmbaucheEmploye3 = new GregorianCalendar(2019, 7, 1);
+        Manager manager1 = Manager.createManager("Youngs", "Joe", 1985, 2, 3, 789, "Elm St", "98765", "Village", 40000, dateEmbaucheEmploye3);
+        if (manager1 != null) {
+            System.out.println("\n manager1 : " + manager1.toString());
+
+             // Augmentation du salaire de l'employé valide
+            manager1.augmenterLeSalaire(5);
+            System.out.println("Nouveau salaire de Manager1 après augmentation : " + manager1.getSalaire());
+
+            // Calcul de l'ancienneté de l'employé valide
+            int ancienneteManager1 = manager1.calculAnnuite();
+            System.out.println("Ancienneté de manager1 : " + ancienneteManager1 + " années");
+        } else {
+            System.out.println("\n manager1 : Création invalide du manager.");
         }
     }
 

@@ -2,19 +2,17 @@ package atelier_2.question1_2;
 
 import java.util.*;
 
-
-public class Employe extends Personne {
-    private double salaire;
+public class Manager extends Employe {
     private GregorianCalendar dateEmbauche;
 
-    protected Employe(String leNom, String lePrenom, GregorianCalendar laDate, Adresse lAdresse, double salaire, GregorianCalendar dateEmbauche) {
-        super(leNom, lePrenom, laDate, lAdresse);
-        this.salaire = salaire;
+    private Manager(String leNom, String lePrenom, GregorianCalendar laDate, Adresse lAdresse, double salaire, GregorianCalendar dateEmbauche) {
+        super(leNom, lePrenom, laDate, lAdresse, salaire, dateEmbauche);
         this.dateEmbauche = dateEmbauche;
+       
     }
 
     public double getSalaire() {
-        return salaire;
+        return super.getSalaire();
     }
 
     /**
@@ -39,7 +37,7 @@ public class Employe extends Personne {
      * @return La méthode renvoie une instance de la classe Employe si la date d'emploi est valide. Si
      * la date d'emploi n'est pas valide, elle renvoie null.
      */
-    public static Employe createEmploye(String leNom, String lePrenom, int j, int m, int a, int numero, String rue, String code_postal, String ville, double salaire, GregorianCalendar dateEmbauche) {
+    public static Manager createManager(String leNom, String lePrenom, int j, int m, int a, int numero, String rue, String code_postal, String ville, double salaire, GregorianCalendar dateEmbauche) {
         GregorianCalendar dateNaissance = new GregorianCalendar(j, m, a);
 
         // Date limite minimale (16 ans)
@@ -52,7 +50,7 @@ public class Employe extends Personne {
 
         // Vérifier si la date d'embauche est valide
         if (!dateEmbauche.before(dateLimiteMin) || dateEmbauche.equals(dateLimiteMin)) {
-            return new Employe(leNom, lePrenom, dateNaissance, new Adresse(numero, rue, code_postal, ville), salaire, dateEmbauche);
+            return new Manager(leNom, lePrenom, dateNaissance, new Adresse(numero, rue, code_postal, ville), salaire, dateEmbauche);
         } else {
             return null; // Création invalide d'employé
         }
@@ -65,12 +63,13 @@ public class Employe extends Personne {
      * être augmenté.
      */
     public void augmenterLeSalaire(double pourcentage) {
-        double tampon ;
-        if (pourcentage > 0) {
-            tampon = this.salaire * (pourcentage / 100);
-            this.salaire = tampon + this.salaire; 
-        }
+        
+        double annuite = this.calculAnnuite();
+        double res = pourcentage + (annuite * 0.5); 
+        super.augmenterLeSalaire(res);
+        
     }
+        
 
     /**
      * La fonction calcule le nombre d'années depuis la date d'emploi.
@@ -85,4 +84,5 @@ public class Employe extends Personne {
         }
         return annees;
     }
+    
 }
