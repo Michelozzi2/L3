@@ -1,4 +1,4 @@
-package cdpoo.td5;
+package cdpoo.exo5;
 
 public class InverseChaine {
 

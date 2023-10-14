@@ -1,4 +1,4 @@
-package cdpoo.td4;
+package cdpoo.exo4;
 
 public class Moyenne {
 

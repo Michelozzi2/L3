@@ -1,4 +1,4 @@
-package cdpoo.td3;
+package cdpoo.exo3;
 
 public class Geometrie {
 

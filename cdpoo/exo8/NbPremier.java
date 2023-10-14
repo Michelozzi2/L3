@@ -1,4 +1,4 @@
-package cdpoo.td8;
+package cdpoo.exo8;
 
 public class NbPremier {
 

@@ -1,4 +1,4 @@
-package cdpoo.td2;
+package cdpoo.exo2;
 
 public class Multiplication {
 

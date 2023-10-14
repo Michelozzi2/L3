@@ -1,4 +1,4 @@
-package cdpoo.td1;
+package cdpoo.exo1;
 
 public class Addition {
 

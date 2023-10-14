@@ -1,4 +1,4 @@
-package cdpoo.td7;
+package cdpoo.exo7;
 
 public class Temperature {
 

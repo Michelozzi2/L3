@@ -1,4 +1,4 @@
-package cdpoo.td6;
+package cdpoo.exo6;
 
 public class Ascii {
     public static void main(String args[]) {

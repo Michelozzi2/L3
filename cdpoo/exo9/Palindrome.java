@@ -1,6 +1,6 @@
-package cdpoo.td9;
+package cdpoo.exo9;
 
-import cdpoo.td5.InverseChaine;
+import cdpoo.exo5.InverseChaine;
 
 public class Palindrome {
 
