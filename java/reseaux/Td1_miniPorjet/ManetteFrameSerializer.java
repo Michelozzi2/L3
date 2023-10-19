@@ -1,4 +1,4 @@
-package reseaux.miniPorjet;
+package reseaux.Td1_miniPorjet;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -7,6 +7,15 @@ import java.io.IOException;
 
 public class ManetteFrameSerializer {
 
+   /**
+    * La fonction `serializeManetteFrame` prend un objet `ManetteFrame` et sérialise ses données dans
+    * un tableau d'octets.
+    * 
+    * @param frame Le paramètre "frame" est un objet de type "ManetteFrame". Il représente une trame de
+    * données provenant d'un contrôleur de jeu (manette) et contient des informations telles que les
+    * positions du joystick et l'état des boutons.
+    * @return La méthode renvoie un tableau d'octets.
+    */
     public static byte[] serializeManetteFrame(ManetteFrame frame) {
         try {
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -29,6 +38,14 @@ public class ManetteFrameSerializer {
         }
     }
 
+    /**
+     * La fonction deserializeManetteFrame prend un tableau d'octets en entrée et renvoie un objet
+     * ManetteFrame en lisant et en extrayant les données du tableau d'octets.
+     * 
+     * @param data Le paramètre "data" est un tableau d'octets qui contient les données sérialisées
+     * d'un objet ManetteFrame.
+     * @return La méthode renvoie un objet ManetteFrame.
+     */
     public static ManetteFrame deserializeManetteFrame(byte[] data) {
         try {
             ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);

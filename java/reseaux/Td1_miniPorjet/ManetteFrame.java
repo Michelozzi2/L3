@@ -1,4 +1,4 @@
-package reseaux.miniPorjet;
+package reseaux.Td1_miniPorjet;
 
 public class ManetteFrame {
     private float joystickX1;
@@ -7,6 +7,7 @@ public class ManetteFrame {
     private float joystickY2;
     private boolean[] boutons;
 
+    
     public ManetteFrame(float joystickX1, float joystickY1, float joystickX2, float joystickY2, boolean[] boutons) {
         this.joystickX1 = joystickX1;
         this.joystickY1 = joystickY1;

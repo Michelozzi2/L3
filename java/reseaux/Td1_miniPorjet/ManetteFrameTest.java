@@ -1,4 +1,4 @@
-package reseaux.miniPorjet;
+package reseaux.Td1_miniPorjet;
 
 import java.util.Arrays;
 
@@ -15,6 +15,11 @@ public class ManetteFrameTest {
 
         // Sérialisation de la frame
         byte[] serializedData = ManetteFrameSerializer.serializeManetteFrame(frame);
+
+        for (int i = 0; i < serializedData.length; i++) {
+                System.out.println(serializedData[i]);
+        }
+        
 
         // Désérialisation de la frame
         ManetteFrame deserializedFrame = ManetteFrameSerializer.deserializeManetteFrame(serializedData);

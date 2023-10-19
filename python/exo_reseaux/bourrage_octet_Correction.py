@@ -11,7 +11,7 @@ def create_encoded_data(num1, num2, num3, bool1, bool2):
     ou Faux
     :return: les données codées, qui sont une valeur entière.
     """
-    # Assurez-vous que les nombres et les booléens sont dans la plage appropriée
+    # Assurez-vous que les nombres sont dans la plage appropriée
     num1 = min(max(num1, 0), 500)
     num2 = min(max(num2, 0), 500)
     num3 = min(max(num3, 0), 500)
