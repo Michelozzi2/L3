@@ -1,14 +1,18 @@
 package reseaux.Td2;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.Externalizable;
 import java.util.ArrayList;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 
 public class Entity2D implements Externalizable {
@@ -111,28 +115,27 @@ public class Entity2D implements Externalizable {
     }
 
     public void toBytes(DataOutputStream data) throws IOException {
-    data.writeInt(id);
-    data.writeUTF(name);
-    data.writeFloat(x);
-    data.writeFloat(y);
-    data.writeInt(items.size()); // Écrit la taille de l'ArrayList
-    for (int item : items) {
-        data.writeInt(item);
-    }
+        data.writeShort(id);
+        data.writeUTF(name);
+        data.writeFloat(x);
+        data.writeFloat(y);
+        data.writeShort(items.size()); // Écrit la taille de l'ArrayList
+        for (int item : items) {
+            data.writeShort(item);
+        }
     }
 
     public static Entity2D fromBytes(DataInputStream data) throws IOException {
-    Entity2D entity = new Entity2D();
-    entity.id = data.readInt();
-    entity.name = data.readUTF();
-    entity.x = data.readFloat();
-    entity.y = data.readFloat();
-    int itemCount = data.readInt(); // Lit la taille de l'ArrayList
-    entity.items = new ArrayList<>(itemCount);
-    for (int i = 0; i < itemCount; i++) {
-        entity.items.add(data.readInt());
+        Entity2D entity = new Entity2D();
+        entity.id = data.readShort();
+        entity.name = data.readUTF();
+        entity.x = data.readFloat();
+        entity.y = data.readFloat();
+        int itemCount = data.readShort(); // Lit la taille de l'ArrayList
+        entity.items = new ArrayList<>(itemCount);
+        for (int i = 0; i < itemCount; i++) {
+            entity.items.add((int) data.readShort());
+        }
+        return entity;
     }
-    return entity;
-    }
-    
 }

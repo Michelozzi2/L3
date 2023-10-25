@@ -8,7 +8,118 @@ Created on Mon Oct 16 10:53:17 2023
 import numpy as np
 import math
 import copy
+import random as rd
+import itertools as it
 
+"""
+valeurs = [9,7,3,8,100,50]
+Resultat = 604
+op = ['*','+','-','/']
+operations = []
+trouve = False
+
+def acceptable(N1,N2):
+    global op
+    list_op = []
+    if N1>N2:
+        list_op.append('+')
+        list_op.append('*')
+        if N1!=N2:
+            list_op.append('-')
+        if N1%N2==0:
+            list_op.append('/')
+    return list_op
+
+def calcul(N1,N2,op):
+    if op =='+':return N1+N2
+    if op =='-':return N1-N2
+    if op =='*':return N1*N2
+    return N1/N2
+
+def LeCompteEstBon(values):
+    global Resultat, op, operations, trouve
+    if Resultat in values :
+        trouve = True
+        return
+    if len(values)==1 :
+        return
+    for N1,N2 in it.permutations(values,2):
+        for op in acceptable(N1, N2):
+            R = calcul(N1, N2, op)
+            liste = copy.deepcopy(values)
+            liste.remove(N1)
+            liste.remove(N2)
+            liste.append(R)
+            operations.append('{} {} {} = {}'.format(N1, op, N2, R))
+            LeCompteEstBon(liste)
+            if trouve == True:
+                return
+            del operations[-1]
+            
+LeCompteEstBon(valeurs)
+            
+        
+        
+    
+""" 
+    
+
+"""
+L = list(range(1,11))*2+[25,50,75,100]
+valeurs = []
+for i in range(6):
+    v = rd.choice(L)
+    valeurs.append(v)
+    L.remove(v)
+Resultat = rd.randint(101, 1000)
+"""
+
+
+sudoku = np.loadtxt('sudoku.txt')
+cases = np.where(sudoku==0)
+trouve = False
+
+
+def bloc(Mat,i,j):
+    L = []
+    for x in range(3*(i//3), 3*(i//3)+3):
+        for y in range(3*(j//3), 3*(j//3)+3):
+            if Mat[x,y]!=0:
+                L.append(Mat[x,y])
+    return L
+
+def conflits(Mat,i,j):
+    L = [x for x in sudoku[i,:] if x>0]
+    L = L+ [x for x in sudoku[:,j] if x>0]
+    L = L+ bloc(Mat, i, j)
+    return set(L)
+
+
+def fill_sudoku(num):
+    global sudoku, cases, trouve
+    if num==len(cases[0]):
+        trouve=True
+        return
+    conf = conflits(sudoku, cases[0][num], cases[1][num])
+    for e in range(1,10):
+        if e not in conf:
+            sudoku[cases[0][num], cases[1][num]]=e
+            fill_sudoku(num+1)
+            if trouve :
+                return
+            sudoku[cases[0][num], cases[1][num]]=0
+    
+#fill_sudoku(0)
+posibilite=[]
+for x,y in zip(cases[0],cases[1]):
+    posibilite.append(conflits(sudoku, x, y))
+    
+L = [ind for ind in range(len(posibilite)) if len(posibilite[ind])==8 ]
+            
+  
+
+
+"""
 Tab = [-1]*8
 Trouve = False
 def acceptable(e, numReine):
@@ -36,6 +147,8 @@ def placerReine(numReine):
             Tab[numReine] = -1
             
 placerReine(0)
+
+"""
             
 """
 def factorielle(N):

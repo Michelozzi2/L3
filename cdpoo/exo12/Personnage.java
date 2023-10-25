@@ -10,14 +10,17 @@ public class Personnage {
     int orientation;
     public final static int NORD = 1, SUD = 2, EST = 3, OUEST = 4;
     static int nbPersonnage;
+    Arme arme;
+    
 
-    public Personnage(String nom, int pointDeForce, int pointDeVie, int x, int y, int orientation){
+    public Personnage(String nom, int pointDeForce, int pointDeVie, int x, int y ,Arme arme ,int orientation){ // ajout arme
         this.nom = nom;
         this.pointDeForce = pointDeForce;
         this.pointDeVie = pointDeVie;
         this.x = x;
         this.y = y;
         this.orientation = orientation;
+        this.arme = arme; 
         nbPersonnage += 1;
         refPersonnage += nbPersonnage;
     }
@@ -54,7 +57,7 @@ public class Personnage {
     }
 
     void attaquer(Personnage cible) {
-        int degats = new Random().nextInt(pointDeForce) + 1;
+        int degats = new Random().nextInt(pointDeForce) + 1  + arme.puissance;
         System.out.println(nom + " attaque " + cible.nom + " et inflige " + degats + " points de dégâts.");
         cible.subirDegats(degats);
     }
@@ -70,7 +73,4 @@ public class Personnage {
         return "Nom: " + nom + ", Position X: " + x + ", Position Y: " + y + ", Orientation: " + orientation;
     }
 
-
-
-    
 }
