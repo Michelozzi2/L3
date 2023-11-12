@@ -18,6 +18,14 @@ def somme_un(L:list) -> int:
 
  
 def somme_deux(L: list) -> int:
+    """
+    La fonction `somme_deux` prend une liste d'entiers en entrée et renvoie la somme de tous les entiers
+    de la liste.
+    
+    :param L: Le paramètre L est une liste d'entiers
+    :type L: list
+    :return: La fonction `somme_deux` renvoie la somme de tous les éléments de la liste d'entrée `L`.
+    """
     resultat_deux = 0
     for i in L :
         resultat_deux += i

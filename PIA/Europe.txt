@@ -1,8 +1,8 @@
-Portugal Espagne Andorre France Belgique Pays-Bas	­Luxembourg Allemagne Suisse Monaco Italie  Pologne Czechi	Slovaquie Autriche Hongrie Slovenie Croatie Bosnie Yougoslavie Roumanie
+Portugal Espagne Andorre France Belgique Pays-Bas Luxembourg Allemagne Suisse Monaco Italie  Pologne Czechi	Slovaquie Autriche Hongrie Slovenie Croatie Bosnie Yougoslavie Roumanie
 Portugal	Espagne
 Espagne	Portugal	Andorre France
 Andorre	Espagne	France
-France	Espagne	Andorre	Belgique		Luxembourg	Allemagne	Suisse	Monaco	Italie
+France	Espagne	Andorre	Belgique	Luxembourg	Allemagne	Suisse	Monaco	Italie
 Belgique	France	Pays-Bas	Luxembourg	Allemagne
 Pays-Bas	Belgique	Allemagne
 Luxembourg	France	Belgique	Allemagne

@@ -96,7 +96,8 @@ def conflits(Mat,i,j):
 
 
 def fill_sudoku(num):
-    global sudoku, cases, trouve
+    global sudoku, cases, trouve, compteur
+    compteur+=1
     if num==len(cases[0]):
         trouve=True
         return
@@ -108,15 +109,17 @@ def fill_sudoku(num):
             if trouve :
                 return
             sudoku[cases[0][num], cases[1][num]]=0
-    
-#fill_sudoku(0)
+            
+compteur = 0    
+fill_sudoku(0)
+"""
 posibilite=[]
 for x,y in zip(cases[0],cases[1]):
     posibilite.append(conflits(sudoku, x, y))
     
 L = [ind for ind in range(len(posibilite)) if len(posibilite[ind])==8 ]
             
-  
+ """ 
 
 
 """

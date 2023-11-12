@@ -64,9 +64,6 @@ def is_mail(str_arg:str)->tuple:
     return result
         
     
-
-
-
 def test():
 
     str_variable2test = "bisgambiglia paul"

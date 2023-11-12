@@ -1,3 +1,8 @@
+# Le dictionnaire `IMC_interpretation` est utilisé pour stocker l'interprétation des différentes
+# plages de l'indice de masse corporelle (IMC). Les clés du dictionnaire représentent les limites
+# supérieures de chaque plage et les valeurs représentent l'interprétation associée à cette plage. Par
+# exemple, un IMC de 16,5 ou moins est interprété comme « dénutrition ou famine », un IMC entre 16,5
+# et 18,5 est interprété comme « maigreur », et ainsi de suite.
 IMC_interpretation = {
     16.5: "denutrition ou famine",
     18.5: "maigreur",
