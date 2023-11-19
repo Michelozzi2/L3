@@ -1,4 +1,4 @@
-package compilation.compilateur;
+package compilation.compilateurJava;
 
 public class InterpreterTest {
     public static void main(String[] args) {
@@ -6,8 +6,8 @@ public class InterpreterTest {
 
         // Tableau d'instructions P-CODE avec de nouvelles instructions
         Instruction[] pCode = {
-            new Instruction("LDI", 5),
-            new Instruction("LDI", 3),
+            new Instruction("LDI", 2),
+            new Instruction("LDI", 2),
             new Instruction("ADD", 0),
             new Instruction("LDI", 2),
             new Instruction("MUL", 0),

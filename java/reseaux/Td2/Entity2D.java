@@ -1,18 +1,18 @@
 package reseaux.Td2;
 
 import java.io.IOException;
-import java.io.InputStream;
+//import java.io.InputStream;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+//import java.io.OutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.Externalizable;
 import java.util.ArrayList;
-import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
+//import java.util.zip.GZIPInputStream;
+//import java.util.zip.GZIPOutputStream;
 
 
 public class Entity2D implements Externalizable {
@@ -52,7 +52,7 @@ public class Entity2D implements Externalizable {
         name = (String) in.readObject();
         x = in.readFloat();
         y = in.readFloat();
-        items = (ArrayList<Integer>) in.readObject();
+        //items = (ArrayList<Integer>) in.readObject();
     }
 
 

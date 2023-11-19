@@ -1,4 +1,4 @@
-package compilation.compilateur;
+package compilation.compilateurJava;
 
 public class Instruction {
     
