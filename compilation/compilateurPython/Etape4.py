@@ -2,25 +2,36 @@
 
 import re
 
+
+nom_fichier = './compilation/compilateurPython/monProgramme.txt'
+# Ouvrir le fichier en mode lecture
+with open(nom_fichier, 'r') as fichier:
+    # Lire le contenu du fichier
+    code = fichier.read()
+
+code = code.replace('(', ' ( ').replace(')', ' ) ').replace(',', ' , ').replace(';', ' ; ').replace('.', ' . ')
+
+liste_mots = code.split()
+
 TOKENS=["program","begin","end","read","write","if","while","(",")","var"]
 i=0 #indice du token actuel
 ID='[a-zA-Z][a-zA-Z_0-9]*'
 NUM='[0-9]+'
 
-PROGRAM=["program",'abc',';',
-         'var','A',',','B',';',
-         'begin',
-         'A',':=','0',';',
-         'B',':=','0',';',
-         'while','A','<>','0','do',
-         'begin',
-         'read','(','A',')',';',
-         'B',':=','A','+','B',';',
-         'end',';',
-         "write",'(','B',')',';', 
-         'end','.']
+#PROGRAM=["program",'abc',';',
+#         'var','A',',','B',';',
+#         'begin',
+#         'A',':=','0',';',
+#         'B',':=','0',';',
+#         'while','A','<>','0','do',
+#         'begin',
+#         'read','(','A',')',';',
+#         'B',':=','A','+','B',';',
+#         'end',';',
+#         "write",'(','B',')',';', 
+#         'end','.']
 
-token=PROGRAM[0]
+token=liste_mots[0]
 
 offset=0
 TABLESYM=[]
@@ -29,6 +40,13 @@ def next_inst(compt):
     return False
 
 def getAdresseFromTableSym(nomVar):
+    """
+    La fonction `getAdresseFromTableSym` renvoie l'adresse d'une variable stockée dans la table
+    `TABLESYM` en fonction de son nom.
+    
+    :param nomVar: Le paramètre "nomVar" est une chaîne qui représente le nom d'une variable
+    :return: l'adresse de la variable nommée "nomVar" de la table TABLESYM.
+    """
     ADDR=0
     for dec in TABLESYM:
         if dec[0]==nomVar:
@@ -38,8 +56,8 @@ def getAdresseFromTableSym(nomVar):
 def entrerSym(classe,value):
     global TABLESYM,offset
     if classe=='constant':
-        value=PROGRAM[i+1]
-    TABLESYM+=[(PROGRAM[i-1],classe,value)]
+        value=liste_mots[i+1]
+    TABLESYM+=[(liste_mots[i-1],classe,value)]
     offset+=1
     
 def chercherSym(sym):
@@ -53,13 +71,13 @@ def chercherSym(sym):
     else:
         erreur_dec(sym)
 
-length=len(PROGRAM)
+length=len(liste_mots)
 
 def next_token():
     global i,token
-    if i<(len(PROGRAM)-1):
+    if i<(len(liste_mots)-1):
         i+=1
-        token=PROGRAM[i]
+        token=liste_mots[i]
     
     
 def erreur_dec(sym):
@@ -156,7 +174,7 @@ def cond():
         expr()
     
 def affec():
-    global token,PLACESYM
+    global token
     #recherche de l'adresse de la variable
     ADDR=getAdresseFromTableSym(token)
     test_et_cherche(ID)
@@ -257,7 +275,7 @@ def generer1(m):
     dans le tableau PCODE à la position actuelle indiquée par la variable PC
     """
     global PCODE,PC
-    if PC==len(PROGRAM):
+    if PC==len(liste_mots):
         print('Error len')
     PCODE[PC]=m
     PC+=1
@@ -273,7 +291,7 @@ def generer2(m,a):
     Il représente la deuxième partie de l'instruction ou des données qui doivent être stockées
     """
     global PCODE,PC
-    if PC==len(PROGRAM):
+    if PC==len(liste_mots):
         print('Error len')
     PCODE[PC]=(m,a)
     PC+=1

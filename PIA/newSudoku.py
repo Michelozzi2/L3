@@ -6,7 +6,7 @@ Created on Mon Nov 13 09:53:33 2023
 """
 
 import numpy as np
-import math
+
 
 class CSP():
     def __init__(self, file_name):
@@ -23,7 +23,7 @@ class CSP():
         
         #Parcours de la ligne
         for ligne in range(self.size):
-            if ligne ==x: continue
+            if ligne ==y: continue
             if self.Grille[x,ligne]==0:
                 libre.append((x,ligne))
             else:
@@ -31,7 +31,7 @@ class CSP():
                 
         #Parcours des colonnes       
         for col in range(self.size):
-            if col ==y: continue
+            if col ==x: continue
             if self.Grille[col,y]==0:
                 libre.append((col,y))
             else:
@@ -50,7 +50,6 @@ class CSP():
        
     def accepte(self):
         domaines = []
-        self.toFill = [(0,0),(1,4)]
         for s in self.toFill:
             libre, occupe = self.contrainte(s[0], s[1])
             values = []
@@ -60,10 +59,54 @@ class CSP():
         return domaines
         
     def MRV(self):
-        case = np.where(sudoku == 0)
-        self.toFill = [(x,y) for x,y in zip(case[0],case[1])]
-        return case
+       #self.toFill = []
+       #for i in range(self.size):
+       #   for j in range(self.size):
+       #       if self.grille[i,j]==0:
+       #           self.toFill.append((i,j))
+       nonAffecte = np.where(self.Grille==0)
+       self.toFill=[(x,y) for x,y in zip(nonAffecte[0],nonAffecte[1])]
+       if len(self.toFill)==0 : return []    
+       self.domaines = self.accepte()
+       minMRV = min( len(self.domaines[s]) for s in range(len(self.domaines)))
+       MRVs = [self.toFill[s] for s in range(len(self.toFill)) if len(self.domaines[s])==minMRV]
+       if len(MRVs)==1 : return MRVs
+       degree = []
+       for s in MRVs:
+           libre, occupe = self.contrainte(s[0],s[1])
+           degree.append(len(libre)) 
+       DHs = [ MRVs[s] for s in range(len(MRVs)) if degree[s]==max(degree) ]    
+       return DHs
+   
+    def nextValue(self, indS, x, y):
+        nonAffecte, occupe = self.contrainte(x, y)
+        if len(nonAffecte)==0 : return self.domaines[indS]
+        impact = []
+        for val in self.domaines[indS] : 
+            compte = sum(val in self.domaines[s] for s in nonAffecte)
+            impact.append(compte)
+        valeursTries = [x for y, x in sorted(zip(impact,self.domaines[indS]), reverse=True)]
+        return valeursTries  
     
-    
+def backtracking_search():
+    global sudoku, Termine, decompte
+    decompte += 1
+    #On recherche quel pays choisir en premier en fonction du MRV puis du degré
+    listeVariables = sudoku.MRV()
+    #S'il n'y a plus de variables à sélectionner on a terminé l'algorithme
+    if len(listeVariables)==0 : Termine=True ; return 
+    #On choisi un pays au hasard, le premier fait l'affaire 
+    S = listeVariables[0]
+    #On classe les valeurs à mettre dans S dans l'ordre de l'impact minimum qu'elles peuvent avoir 
+    listeValeurs = sudoku.nextValue(S)
+    for V in listeValeurs:
+        sudoku.Grille[S[0],S[1]]=V
+        backtracking_search()
+        if (Termine==True) : return
+        #On enléve la couleur affectée précédement
+        sudoku.Grille[S[0],S[1]]=0
+            
 sudoku = CSP('sudoku.txt')
-domaines = sudoku.MRV()  
+Termine = False 
+decompte = 0
+backtracking_search()

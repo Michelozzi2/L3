@@ -2,37 +2,65 @@
 
 import re
 
+nom_fichier = './compilation/compilateurPython/monProgramme.txt'
+# Ouvrir le fichier en mode lecture
+with open(nom_fichier, 'r') as fichier:
+    # Lire le contenu du fichier
+    code = fichier.read()
+
+code = code.replace('(', ' ( ').replace(')', ' ) ').replace(',', ' , ').replace(';', ' ; ').replace('.', ' . ')
+
+liste_mots = code.split()
+
+# La liste de mot pour l'exemple est :
+# liste_mots=["program",'abc',';','const','C','=','10',';','D','=','8',';',
+#          'var','A',',','B',';',
+#          'begin',
+#          'A',':=','0',';',
+#          'B',':=','0',';',
+#          'while','A','<>','0','do',
+#          'begin',
+#          'read','(','A',')',';',
+#          'B',':=','A','+','B',';',
+#          'end',';',
+#          "write",'(','B',')',';', 
+#          'end','.']
+
 TOKENS=["program","begin","end","read","write","if","while","(",")","var"]
 i=0 #indice du token actuel
 ID='[a-zA-Z][a-zA-Z_0-9]*'
 NUM='[0-9]+'
 
-PROGRAM=["program",'abc',';','const','C','=','10',';','D','=','8',';',
-         'var','A',',','B',';',
-         'begin',
-         'A',':=','0',';',
-         'B',':=','0',';',
-         'while','A','<>','0','do',
-         'begin',
-         'read','(','A',')',';',
-         'B',':=','A','+','B',';',
-         'end',';',
-         "write",'(','B',')',';', 
-         'end','.']
-
-token=PROGRAM[0]
+token=liste_mots[0]
 
 offset=0
 TABLESYM=[]
 
 def entrerSym(classe,value):
+    """
+    La fonction `entrerSym` ajoute un symbole à la table des symboles avec la classe et la valeur
+    données.
+    
+    :param classe: Le paramètre "classe" permet de préciser la classe du symbole saisi. Il peut s'agir
+    d'une constante, d'une variable, d'une fonction, etc
+    :param value: Le paramètre value est la valeur associée au symbole saisi. Il peut s'agir d'une
+    valeur constante ou de toute autre valeur selon la classe du symbole
+    """
     global TABLESYM,offset
     if classe=='constant':
-        value=PROGRAM[i+1]
-    TABLESYM+=[(PROGRAM[i-1],classe,value)]
+        value=liste_mots[i+1]
+    TABLESYM+=[(liste_mots[i-1],classe,value)]
     offset+=1
     
 def chercherSym(sym):
+    """
+    La fonction `chercherSym` recherche un symbole dans la liste `TABLESYM` et le renvoie s'il est
+    trouvé, sinon elle appelle la fonction `erreur_dec`.
+    
+    :param sym: Le paramètre "sym" est un symbole recherché dans la liste "TABLESYM"
+    :return: La fonction `chercherSym(sym)` renvoie le symbole `sym` s'il se trouve dans la liste
+    `TABLESYM`. Si `sym` n'est pas trouvé, la fonction appelle la fonction `erreur_dec(sym)`.
+    """
     global TABLESYM
     res=False
     for s in TABLESYM:
@@ -43,23 +71,29 @@ def chercherSym(sym):
     else:
         erreur_dec(sym)
 
-length=len(PROGRAM)
+length=len(liste_mots)
 
 def next_token():
     global i,token
-    if i<(len(PROGRAM)-1):
+    if i<(len(liste_mots)-1):
         i+=1
-        token=PROGRAM[i]
+        token=liste_mots[i]
     
     
 def erreur_dec(sym):
+    """
+    La fonction `erreur_dec` imprime un message d'erreur indiquant qu'une variable n'est pas déclarée.
+    
+    :param sym: Le paramètre "sym" représente un symbole ou une variable non déclarée
+    """
     print("variable {} not declared".format(sym))
+
     
 def erreur(exp_token,given_token):
     print("ERREUR ", "expected: ",exp_token, " given: ",given_token)
     
 def teste(test_token):
-    #print('expected:',test_token,'given: ',token) 
+    print('expected:',test_token,'given: ',token) 
     if test_token==token or re.match(test_token,token):
         next_token()
         return 1
@@ -69,11 +103,26 @@ def teste(test_token):
         return 0
         
 def test_et_entre(test_token, classe):
+    """
+    La fonction `test_et_entre` vérifie si un jeton de test donné réussit un test et entre dans le
+    symbole avec une classe et une valeur de décalage spécifiées.
+    
+    :param test_token: Le paramètre `test_token` est un jeton en cours de test. Il s'agit probablement
+    d'une variable ou d'une valeur transmise à la fonction
+    :param classe: Le paramètre « classe » est une variable qui représente la classe ou le type du token
+    testé. Il est utilisé comme argument lors de l'appel de la fonction "entrerSym"
+    """
     global offset
     if teste(test_token)==1:
         entrerSym(classe,value=offset)
         
 def test_et_cherche(test_token):
+    """
+    La fonction "test_et_cherche" prend en entrée un jeton de test, vérifie s'il réussit un test, puis
+    recherche un symbole.
+    
+    :param test_token: Le paramètre `test_token` est une variable qui représente un jeton
+    """
     tok=token
     if teste(test_token)==1:
         chercherSym(tok)

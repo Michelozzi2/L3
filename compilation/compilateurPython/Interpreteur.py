@@ -17,7 +17,7 @@ def interpreteur(PCODE):
     dans le programme. Le premier élément du tuple est le code d'instruction (par exemple "ADD", "SUB",
     "MUL", etc.) et le deuxième élément est l'opérande de cette instruction
     """
-    MEM=[]
+    MEM=[] #mémoire
     SP=0 #pointeur de pile
     PC=0 #pointeur d'instructions
     PS="EXECUTION" #program status
@@ -102,46 +102,15 @@ PCODE=[("INT",2),("LDA",0),("INN",False),("LDA",1),("LDA",0),("LDV",False),
 
 PCODe = [
     ("LDI", 10),     # Charge la valeur 5
-    ("LDI", 2),     # Charge la valeur 3
-    ("DIV", False), # Multiplie les deux valeurs précédemment chargées
+    ("LDI", 2),     # Charge la valeur 2
+    ("DIV", False), # Divise les deux valeurs précédemment chargées
     ("PRN", False), # Affiche le résultat
     ("HLT", False)  # Arrête le programme
 ]
 
-PCOdE = [
-    ("INT", 3),     # Alloue de l'espace pour 3 variables
-    ("LDA", 1),     # Charge l'adresse de la première variable
-    ("LDI", '0'),   # Charge la valeur '0'
-    "STO",          # Stocke la valeur '0' à l'adresse de la première variable
-    ("LDA", 2),     # Charge l'adresse de la deuxième variable
-    ("LDI", '0'),   # Charge la valeur '0'
-    "STO",          # Stocke la valeur '0' à l'adresse de la deuxième variable
-    ("LDA", 1),     # Charge l'adresse de la première variable
-    "LDV",          # Charge la valeur depuis la première variable
-    ("LDA", 1),     # Charge l'adresse de la première variable
-    "LDV",          # Charge la valeur depuis la première variable
-    ("LDI", '0'),   # Charge la valeur '0'
-    ("LDA", 1),     # Charge l'adresse de la première variable
-    "INN",          # Demande une entrée utilisateur et stocke la valeur à l'adresse de la première variable
-    ("LDA", 2),     # Charge l'adresse de la deuxième variable
-    ("LDA", 1),     # Charge l'adresse de la première variable
-    "LDV",          # Charge la valeur depuis la première variable
-    ("LDA", 1),     # Charge l'adresse de la première variable
-    "LDV",          # Charge la valeur depuis la première variable
-    ("LDA", 2),     # Charge l'adresse de la deuxième variable
-    "LDV",          # Charge la valeur depuis la deuxième variable
-    ("LDA", 2),     # Charge l'adresse de la deuxième variable
-    "LDV",          # Charge la valeur depuis la deuxième variable
-    "ADD",          # Additionne les deux valeurs précédemment chargées
-    "STO",          # Stocke le résultat dans la mémoire
-    ("LDA", 2),     # Charge l'adresse de la deuxième variable
-    "LDV",          # Charge la valeur depuis la deuxième variable
-    ("LDA", 2),     # Charge l'adresse de la deuxième variable
-    "LDV",          # Charge la valeur depuis la deuxième variable
-    "PRN",          # Affiche le résultat
-    "HLT",          # Arrête le programme
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-]
+PCOdE = [('INT', 4), ('LDA', 2), ('LDI', '0'), 'STO', ('LDA', 3), ('LDI', '0'), 'STO', ('LDI', 1), ('LDA', 2), 'LDV', ('LDA', 2), 'LDV', ('LDI', '0'), ('LDA', 2), 'INN', ('LDA', 3), ('LDI', 1), ('LDA', 2), 'LDV', ('LDA', 2), 'LDV', ('LDI', 1), ('LDA', 3), 'LDV', ('LDA', 3), 'LDV', 'ADD', 'STO', ('LDI', 1), ('LDA', 3), 'LDV', ('LDA', 3), 'LDV', 'PRN', 'HLT', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 
-interpreteur(PCOdE)
+
+
+interpreteur(PCODe)
