@@ -1,0 +1,40 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://ConnectionBox.tscn" type="PackedScene" id=1]
+[ext_resource path="res://ChatBox.tscn" type="PackedScene" id=2]
+[ext_resource path="res://ChatScene.gd" type="Script" id=3]
+[ext_resource path="res://UserList.tscn" type="PackedScene" id=4]
+[ext_resource path="res://MsgBubble.tscn" type="PackedScene" id=5]
+
+[node name="ChatScene" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 96.0
+margin_top = 3.0
+margin_right = -29.0
+margin_bottom = -288.0
+script = ExtResource( 3 )
+
+[node name="ChatBox" parent="." instance=ExtResource( 2 )]
+margin_left = -80.0
+margin_top = 287.0
+margin_right = 113.0
+margin_bottom = 358.0
+
+[node name="ConnectionBox" parent="." instance=ExtResource( 1 )]
+anchor_right = 1.0
+anchor_bottom = 0.928
+margin_left = -92.0
+margin_top = 3.0
+margin_right = -732.0
+margin_bottom = -26.752
+rect_scale = Vector2( 0.830092, 0.884077 )
+
+[node name="UserList" parent="." instance=ExtResource( 4 )]
+position = Vector2( 79, -124 )
+
+[node name="MsgBubble" parent="." instance=ExtResource( 5 )]
+margin_left = 131.0
+margin_top = 183.0
+margin_right = 315.0
+margin_bottom = 223.0

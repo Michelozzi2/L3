@@ -1,36 +1,43 @@
 package cdpoo.TD5.exo4;
 
-
-import java.io.PrintWriter;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
 
 public class AcceptClient extends Thread {
-    private Socket socket;
     private ServerSocket server;
-    private PrintWriter out;
+    private List<Socket> clients;
+    private BroadcastMessage broadcaster;
 
-    public AcceptClient( ServerSocket server) {
+    public AcceptClient(ServerSocket server, List<Socket> clients) {
         this.server = server;
+        this.clients = clients;
+        this.broadcaster = new BroadcastMessage(clients);
     }
 
+    @Override
     public void run() {
-        System.out.println("Le client est a l'ecoute sur le port 2000");
-        int nbclient = 0;
-        try{
-            while(true){
-                socket = server.accept();
-                nbclient++;
-                System.out.println("Le client numero " + nbclient + " est connecte");
-                out = new PrintWriter(socket.getOutputStream());
-                out.println("Bienvenue client numero " + nbclient);
-                out.flush();
-                socket.close();
+        while (true) {
+            try {
+                Socket client = server.accept();
+                clients.add(client);
+                new Thread(() -> {
+                    try {
+                        BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                        String message;
+                        while ((message = in.readLine()) != null) {
+                            broadcaster.send(message, client);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }).start();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
-        catch(Exception e){
-            e.printStackTrace();
-        }
     }
-   
 }

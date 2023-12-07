@@ -74,7 +74,7 @@ for i in range(6):
 Resultat = rd.randint(101, 1000)
 """
 
-
+"""
 sudoku = np.loadtxt('sudoku.txt')
 cases = np.where(sudoku==0)
 trouve = False
@@ -112,6 +112,8 @@ def fill_sudoku(num):
             
 compteur = 0    
 fill_sudoku(0)
+
+"""
 """
 posibilite=[]
 for x,y in zip(cases[0],cases[1]):
@@ -122,7 +124,7 @@ L = [ind for ind in range(len(posibilite)) if len(posibilite[ind])==8 ]
  """ 
 
 
-"""
+
 Tab = [-1]*8
 Trouve = False
 def acceptable(e, numReine):
@@ -151,7 +153,7 @@ def placerReine(numReine):
             
 placerReine(0)
 
-"""
+
             
 """
 def factorielle(N):
