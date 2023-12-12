@@ -5,7 +5,9 @@ Created on Tue Dec  5 15:57:36 2023
 @author: matth
 """
 
+#parametre du probleme
 nbR = 8
+#variables
 Reines = [-1]*nbR
 Trouve = False
 
@@ -21,8 +23,11 @@ def accepter(pos,e):
 
 def placerReine(e):
     global nbR, Reines, Trouve
+    #etape 3 et 4 condition d'arret
     if e==nbR:
         Trouve=True; return
+    #etape 5 parcours des etapes verification si acceptable appel 
+    #fct recursive sinon backtracking
     for pos in range(8):
         if accepter(pos, e):
             Reines[e]=pos

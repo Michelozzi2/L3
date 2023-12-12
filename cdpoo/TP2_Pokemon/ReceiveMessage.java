@@ -1,4 +1,4 @@
-package cdpoo.TD5.exo4;
+package cdpoo.TP2_Pokemon;
 
 import java.io.BufferedReader;
 import java.io.IOException;

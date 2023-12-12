@@ -1,5 +1,5 @@
 package cdpoo.TP2_Pokemon;
 
-public class AreneConnection {
+public class CombatsDresseur {
     
 }

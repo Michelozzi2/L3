@@ -7,6 +7,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
 
+/**
+ * La classe AcceptClient accepte les connexions client entrantes, les ajoute à une liste et crée un
+ * nouveau thread pour gérer l'entrée de chaque client et la diffuser à tous les autres clients.
+ */
 public class AcceptClient extends Thread {
     private ServerSocket server;
     private List<Socket> clients;

@@ -7,7 +7,7 @@ Created on Mon Dec  4 08:54:49 2023
 import numpy as np 
 import math
 import copy
-
+from copy import deepcopy
 """
 reseau = np.loadtxt("reseau.txt")
 fp = open('Reseau.txt')
@@ -54,31 +54,53 @@ def CheminLePlusCourt():
 res = CheminLePlusCourt()
 """
 
-Barre = [0,2,5,7,9,10,12,14,15]
 
-#Variables du probleme
-Decoupe = [] ; TailleMax= len(Barre)-1
-Prix = 0 ; PrixOp = 0
-DecoupeOp = []
+# 1 - Parametre du problème 
+barre = [0, 2, 5, 7, 9, 10, 12, 14, 15]
+tailleBarre = len(barre) -1
 
-def decouper():
-    global Barre ,TailleMax
-    global Decoupe, Prix, DecoupeOp, PrixOp
-    taille=sum(Decoupe)
-    if taille == TailleMax :
-        if Prix>PrixOp :
-            DecoupeOp = copy.deepcopy(Decoupe)
-            PrixOp = Prix
-        return
-    for i in range(1,(TailleMax-taille)+1) :
-        Decoupe.append(i)
-        Prix = Prix + Barre[i]
-        decouper()
-        Prix = Prix - Barre[i]
-        del Decoupe[-1]
-        
-res = decouper()
-        
+# 2 - Variable
+decoupe = []
+prix = 0
+bestDecoupe = []
+bestPrix = 0
+
+# 3 - etape
+def backtracking(e): 
+    global barre, tailleBarre
+    global decoupe, prix, bestDecoupe, bestPrix
+
+    # 4 - solution 
+    if sum(decoupe) >= tailleBarre: 
+        if prix > bestPrix : 
+            bestDecoupe = deepcopy(decoupe)
+            bestPrix = prix
+        return 
+
+    # 5 - etape suivante
+    for pos in [True, False]: 
+        # 6 - Acceptable 
+        if (accepte(e)):
+            if  pos==True:
+                decoupe.append(e)
+                prix += barre[e]
+                backtracking(e)
+                prix -= barre[e]
+                del decoupe[-1]
+            else : 
+                backtracking(e+1)
+
+# 6 - Accepte
+def accepte(e): 
+    global decoupe, tailleBarre
+    if e + sum(decoupe)> tailleBarre : 
+        return False 
+    else : 
+        return True
+    
+backtracking(1)
+print(bestPrix)
+print(bestDecoupe)
 
 
             
