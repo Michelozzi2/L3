@@ -164,7 +164,7 @@ public class MainPokemon {
                         // Crée un nouvel objet Save_dresseur
                         Save_dresseur save = new Save_dresseur();
                         // Enregistre l'objet dresseur dans un fichier
-                        save.enregistrerDresseur(dresseur, "1cdpoo/TP2_Pokemon/saves/" + nomDresseur + ".txt");
+                        save.enregistrerDresseur(dresseur, "cdpoo/TP2_Pokemon/saves/" + nomDresseur + ".txt");
                         break;
                 }
             } while (!choix.equals("5"));

@@ -1,7 +1,9 @@
 package cdpoo.TP2_Pokemon;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 //import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
 import java.util.List;
@@ -29,38 +31,208 @@ public class Dresseur implements Serializable {
     }
 
     static void connectToServer(Dresseur dresseur) {
-        try (Socket socket = new Socket("localhost", AreneServeur.PORT)) {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-            //ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+         try{
+            Socket socket=new Socket("127.0.0.1",8888);
+            DataInputStream inStream=new DataInputStream(socket.getInputStream());
+            DataOutputStream outStream=new DataOutputStream(socket.getOutputStream());
+            String clientMessage="",serverMessage="";
+
+            //rename le thread dans le server avec le pseudo du joueur
+            clientMessage="name " + dresseur.getNom();
+            outStream.writeUTF(clientMessage);
+            outStream.flush();
+
+            //demande de combattre dans l'arène et attend qu'un adversaire rejoigne 
+            clientMessage="combat";
+            outStream.writeUTF(clientMessage);
+            outStream.flush();
+            serverMessage=inStream.readUTF();
+            System.out.println("vous venez d'entrer dans l'arène. Le combat commencera dès qu'un adversaire rejoindra");
+            //le server désigne qui jouera en premier et qui jouera en second à pile ou face
+
+            if(serverMessage.equals("premier")){
+            System.out.println(serverMessage);
+            combat1(dresseur, socket);
+            }else{
+            System.out.println(serverMessage);
+            combat2(dresseur, socket);
+            }
+            
+            outStream.close();
+            inStream.close();
+            socket.close();
+        }catch(Exception e){
+            System.out.println(e);
+        }
+  
+    }
+
+    //fonction combat si premier joueur
+    public static void combat1(Dresseur dresseur, Socket socket) throws NumberFormatException, IOException{
+        //initialise les fonctions de communication avec le server
+        DataInputStream inStream=new DataInputStream(socket.getInputStream());
+        DataOutputStream outStream=new DataOutputStream(socket.getOutputStream());
+        String clientMessage="";
     
-            // Recevoir l'objet dresseur du client
-            objectOutputStream.writeObject(dresseur);
+        for(Object obj : dresseur.getEquipe()){
+            Pokemon selfPokemon = (Pokemon) obj;
+            int selfHp = selfPokemon.getPv();
+            int result = 0;
+            
+            //envoie les informations de son pokemon à l'adversaire
+            outStream.writeUTF(String.valueOf(selfHp));
+            outStream.flush();
+        
+            // Gestion des types de Pokemon
+            String type = selfPokemon.getType();
+            String type1, type2;
+            if(type.contains("/")) {
+                String[] types = type.split("/");
+                type1 = types[0];
+                type2 = types[1];
+            } else {
+                type1 = type;
+                type2 = "none";
+            }
+        
+            outStream.writeUTF(type1);
+            outStream.flush();
+            outStream.writeUTF(type2);
+            outStream.flush();
+        
+            outStream.writeUTF(selfPokemon.getNom());
     
-            // Envoyer le message de début de combat
-            objectOutputStream.writeObject("Le combat commence !");
+            //recois les informations du pokemon adverse
+            int opponentHp = Integer.parseInt(inStream.readUTF());
+            String opponentType1 = inStream.readUTF();
+            String opponentType2 = inStream.readUTF();
+            String opponentPokemon = inStream.readUTF();
     
-            // Simulation d'un combat tour par tour
-            for (int i = 0; i < 5; i++) {
-                // Envoyer le message de début de tour
-                objectOutputStream.writeObject("Tour " + (i + 1));
+            System.out.println("adversaire trouvé:le combat va bientôt commencer");
+            System.out.println("vous êtes le 1er joueur");
+            System.out.println("vous envoyer " + selfPokemon.getnom() + " au combat");
+            System.out.println("l'adversaire envoi un " + opponentPokemon + " au combat");
+            System.out.println("Pv de votre pokemon : " + selfHp + "; Pv du pokemon adverse " + opponentHp);
     
-                if (AcceptDresseur.dresseurs_Connected.size() == 2) {
-                    CombatDresseur.startCombat();
-                    // Réinitialiser la liste des dresseurs pour un nouveau combat
-                } else {
-                    System.out.println("Il ne peut y avoir que deux dresseurs connectés !");
-                }
+            //l'ordre est inverssé en fonction de permier ou second joueur
+            //après l'attaque de l'adversaire si le pokemon est ko le combat s'arrête
+            while(selfHp > 0){
+              //attaque le pokemon adverse
+              result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, opponentPokemon, opponentPokemon);
+              opponentHp -= result;
+              System.out.println("vous venez d'infliger " + result + " au pokemon adverse");
+              System.out.println("Pv restant du pokemon adverse " + opponentHp);
+              clientMessage= String.valueOf(result);
+              outStream.writeUTF(clientMessage);
+              outStream.flush();
+              //après cette attaque si l'adversaire et ko le combat s'arrête
+              if(opponentHp < 1){
+                break;
+              }
+    
+              //se fait attaquer
+              result = Integer.parseInt(inStream.readUTF());
+              selfHp -= result;
+              System.out.println("le pokemon adverse à attaqué, votre pokemon a subit " + result + " dégats");
+              System.out.println("Pv restant de votre pokemon " + selfHp);
             }
     
-            // Envoyer le message de fin de combat
-            objectOutputStream.writeObject("Le combat est terminé !");
-    
-        } catch (Exception e) {
-            e.printStackTrace();
+            if(opponentHp < 1){
+              System.out.println("Félicitation vous avez gagné!");
+              break;
+            }else if(selfHp < 1){
+              System.out.println("Vous avez perdu!");
+             
+            }else{
+              System.out.println("erreur !!");
+            }
         }
     }
+
     
+    //fonction combat si deuxieme joueur
+    public static void combat2(Dresseur dresseur, Socket socket) throws NumberFormatException, IOException{
+        //initialise les fonctions de communication avec le server
+        DataInputStream inStream=new DataInputStream(socket.getInputStream());
+        DataOutputStream outStream=new DataOutputStream(socket.getOutputStream());
+        String clientMessage="";
     
+        for(Object obj : dresseur.getEquipe()){
+            Pokemon selfPokemon = (Pokemon) obj;
+            int selfHp = selfPokemon.getPv();
+            int result = 0;
+            
+            //envoie les informations de son pokemon à l'adversaire
+            outStream.writeUTF(String.valueOf(selfHp));
+            outStream.flush();
+        
+            // Gestion des types de Pokemon
+            String type = selfPokemon.getType();
+            String type1, type2;
+            if(type.contains("/")) {
+                String[] types = type.split("/");
+                type1 = types[0];
+                type2 = types[1];
+            } else {
+                type1 = type;
+                type2 = "none";
+            }
+        
+            outStream.writeUTF(type1);
+            outStream.flush();
+            outStream.writeUTF(type2);
+            outStream.flush();
+        
+            outStream.writeUTF(selfPokemon.getNom());
+    
+            //recois les informations du pokemon adverse
+            int opponentHp = Integer.parseInt(inStream.readUTF());
+            String opponentType1 = inStream.readUTF();
+            String opponentType2 = inStream.readUTF();
+            String opponentPokemon = inStream.readUTF();
+    
+            System.out.println("adversaire trouvé:le combat va bientôt commencer");
+            System.out.println("vous êtes le 2ème joueur");
+            System.out.println("vous envoyer " + selfPokemon.getnom() + " au combat");
+            System.out.println("l'adversaire envoi un " + opponentPokemon + " au combat");
+            System.out.println("Pv de votre pokemon : " + selfHp + "; Pv du pokemon adverse " + opponentHp);
+    
+            //l'ordre est inverssé en fonction de permier ou second joueur
+            //après l'attaque de l'adversaire si le pokemon est ko le combat s'arrête
+            while(selfHp > 0){
+              //se fait attaquer
+              result = Integer.parseInt(inStream.readUTF());
+              selfHp -= result;
+              System.out.println("le pokemon adverse à attaqué, votre pokemon a subit " + result + " dégats");
+              System.out.println("Pv restant de votre pokemon " + selfHp);
+              //après cette attaque si le pokemon est ko le combat s'arrête
+              if(selfHp < 1){
+                break;
+              }
+    
+              //attaque le pokemon adverse
+              result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, opponentPokemon, opponentPokemon);
+              opponentHp -= result;
+              System.out.println("vous venez d'infliger " + result + " au pokemon adverse");
+              System.out.println("Pv restant du pokemon adverse " + opponentHp);
+              clientMessage= String.valueOf(result);
+              outStream.writeUTF(clientMessage);
+              outStream.flush();
+            }
+    
+            if(opponentHp < 1){
+              System.out.println("Félicitation vous avez gagné!");
+              break;
+            }else if(selfHp < 1){
+              System.out.println("Vous avez perdu!");
+             
+            }else{
+              System.out.println("erreur !!");
+            }
+        }
+    }
+   
+
 
     /**
      * Renvoie le nom du dresseur
@@ -101,6 +273,7 @@ public class Dresseur implements Serializable {
     public void setEquipe(List<Object> equipe) {
         this.equipe = equipe;
     }
+
 
     /**
      * Méthode permettant de chasser un Pokémon en faisant un random dans une liste

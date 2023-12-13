@@ -152,4 +152,8 @@ public class Pokemon implements Serializable {
         pokemon.setPV(pokemon.getPv() - this.getPc());
         return 0;
     }
+
+    public String getnom() {
+        return null;
+    }
 }
