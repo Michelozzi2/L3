@@ -3,7 +3,7 @@
 import re
 
 
-nom_fichier = './compilation/compilateurPython/monProgramme.txt'
+nom_fichier = './compilation/compilateurPython/test'
 # Ouvrir le fichier en mode lecture
 with open(nom_fichier, 'r') as fichier:
     # Lire le contenu du fichier

@@ -7,16 +7,17 @@ import java.net.Socket;
 import java.util.List;
 
 public class BroadcastMessage {
-    private List<Socket> dresseurs;
+    private List<Socket> dresseurs_Sockets;
     private String message;
 
+
     public BroadcastMessage(List<Socket> dresseurs, String message) {
-        this.dresseurs = dresseurs;
+        this.dresseurs_Sockets = dresseurs;
         this.message = message;
     }
 
     public void send() {
-        for (Socket socket : dresseurs) {
+        for (Socket socket : dresseurs_Sockets) {
             try {
                 OutputStream output = socket.getOutputStream();
                 PrintWriter writer = new PrintWriter(output, true);

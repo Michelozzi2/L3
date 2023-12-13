@@ -1,5 +1,10 @@
 package cdpoo.TP2_Pokemon;
 
+/**
+ * Cette classe représente la création des Pokémon à partir d'un fichier XLSX.
+ * Elle contient des méthodes pour initialiser les Pokémon, récupérer les listes de Pokémon non évolués,
+ * de Pokémon avec une première évolution et de Pokémon avec une deuxième évolution.
+ */
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -9,7 +14,11 @@ public class Creation_Pokemon {
     private static List<Pokemon_evolution1> PokemonEvo1;
     private static List<Pokemon_evolution2> PokemonEvo2;
 
-    // Cette méthode initialise les pokémons à partir d'un fichier XLSX
+    /**
+     * Cette méthode initialise les pokémons à partir d'un fichier XLSX.
+     * @param Pokemon_liste La liste des Pokémon à initialiser.
+     * @throws Exception Si une erreur se produit lors de l'initialisation des Pokémon.
+     */
     public static void Initialisation_pokemon(List<List<String>> Pokemon_liste) throws Exception {
         // Création d'une nouvelle instance de la classe ReadXLSX
 
@@ -67,28 +76,21 @@ public class Creation_Pokemon {
             // Si la sous-liste est vide ou si le premier élément est un type, on passe à la
             // suite
             if (sous_liste.isEmpty() || types.contains(sous_liste.get(0))) {
+                instancesPokEvo2List.add(null);
                 continue;
+                
             }
 
-            // Si le premier élément de la sous-liste est un espace
             if (sous_liste.get(0).equals(" ")) {
-                // Effacement de tous les éléments de la sous-liste
                 sous_liste.clear();
+                instancesPokEvo2List.add(null);
             } else if (sous_liste.size() == 3) {
-                // Création d'une nouvelle instance de Pokemon_evolution2 et ajout à la liste
-                // instances
-                Pokemon_evolution2 p1Evolution2 = new Pokemon_evolution2(sous_liste.get(0), sous_liste.get(1),
-                        sous_liste.get(2), 0, 0);
+                Pokemon_evolution2 p1Evolution2 = new Pokemon_evolution2(sous_liste.get(0), sous_liste.get(1), sous_liste.get(2), 0, 0);
                 instancesPokEvo2List.add(p1Evolution2);
-                // Suppression du premier élément de la sous-liste
                 sous_liste.remove(0);
             } else {
-                // Création d'une nouvelle instance de Pokemon_evolution2 et ajout à la liste
-                // instances
-                Pokemon_evolution2 p1Evolution2 = new Pokemon_evolution2(sous_liste.get(0), sous_liste.get(1), 0,
-                        0);
+                Pokemon_evolution2 p1Evolution2 = new Pokemon_evolution2(sous_liste.get(0), sous_liste.get(1), 0, 0);
                 instancesPokEvo2List.add(p1Evolution2);
-                // Suppression du premier élément de la sous-liste
                 sous_liste.remove(0);
             }
         }
@@ -98,15 +100,27 @@ public class Creation_Pokemon {
 
     }
 
-    public static List <Pokemon> getNonEvo() {
+    /**
+     * Récupère la liste des Pokémon non évolués.
+     * @return La liste des Pokémon non évolués.
+     */
+    public static List<Pokemon> getNonEvo() {
         return PokemonNonEvo;
     }
 
-    public static List <Pokemon_evolution1> getEvo1() {
+    /**
+     * Récupère la liste des Pokémon avec une première évolution.
+     * @return La liste des Pokémon avec une première évolution.
+     */
+    public static List<Pokemon_evolution1> getEvo1() {
         return PokemonEvo1;
     }
 
-    public static List <Pokemon_evolution2> getEvo2() {
+    /**
+     * Récupère la liste des Pokémon avec une deuxième évolution.
+     * @return La liste des Pokémon avec une deuxième évolution.
+     */
+    public static List<Pokemon_evolution2> getEvo2() {
         return PokemonEvo2;
     }
 }

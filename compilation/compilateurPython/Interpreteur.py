@@ -101,7 +101,7 @@ PCODE=[("INT",2),("LDA",0),("INN",False),("LDA",1),("LDA",0),("LDV",False),
 
 
 PCODe = [
-    ("LDI", 10),     # Charge la valeur 5
+    ("LDI", 10),     # Charge la valeur 10
     ("LDI", 2),     # Charge la valeur 2
     ("DIV", False), # Divise les deux valeurs précédemment chargées
     ("PRN", False), # Affiche le résultat
@@ -110,7 +110,6 @@ PCODe = [
 
 PCOdE = [('INT', 4), ('LDA', 2), ('LDI', '0'), 'STO', ('LDA', 3), ('LDI', '0'), 'STO', ('LDI', 1), ('LDA', 2), 'LDV', ('LDA', 2), 'LDV', ('LDI', '0'), ('LDA', 2), 'INN', ('LDA', 3), ('LDI', 1), ('LDA', 2), 'LDV', ('LDA', 2), 'LDV', ('LDI', 1), ('LDA', 3), 'LDV', ('LDA', 3), 'LDV', 'ADD', 'STO', ('LDI', 1), ('LDA', 3), 'LDV', ('LDA', 3), 'LDV', 'PRN', 'HLT', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+pcode = [('INT', 4), ('LDA', 2), ('LDI', '10'), 'STO', ('LDA', 3), ('LDI', '5'), 'STO', ('LDA', '0'), ('LDI', 1), ('LDA', 2), 'LDV', ('LDA', 2), 'LDV', ('LDI', 1), ('LDA', 3), 'LDV', ('LDA', 3), 'LDV', 'ADD', 'STO', 'HLT']
 
-
-
-interpreteur(PCODe)
+interpreteur(pcode)
