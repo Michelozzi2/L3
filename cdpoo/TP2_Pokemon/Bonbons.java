@@ -1,11 +1,12 @@
 package cdpoo.TP2_Pokemon;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Cette classe représente une collection de bonbons.
  */
-public class Bonbons {
+public class Bonbons implements Serializable {
     static HashMap<String, Integer> Bonbon = new HashMap<>();
 
     /**

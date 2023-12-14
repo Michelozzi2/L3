@@ -88,7 +88,7 @@ public class MainPokemon {
                             // Fait évoluer le pokemon choisi
                             dresseur.evoluerPokemon(choixPokemon, nonEvoPokemons, evo1Pokemons, evo2Pokemons);
                             // Attend 4 secondes
-                            Thread.sleep(4000);
+                            Thread.sleep(10000);
                             System.out.print("\033\143");
                             break;
                             // Si l'utilisateur veut transférer un pokemon
