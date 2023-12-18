@@ -1,11 +1,12 @@
 package cdpoo.TP2_Pokemon;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
 public class MainPokemon {
-    
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -21,11 +22,11 @@ public class MainPokemon {
             File file = new File("cdpoo/TP2_Pokemon/saves/" + nomDresseur + ".txt");
             // Déclare une variable pour le dresseur
             Dresseur dresseur;
-            // Crée une instance de la classe Open_Save pour ouvrir la sauvegarde
-            Open_Save openSave = new Open_Save();
 
             // Vérifie si le fichier de sauvegarde du dresseur existe
             if (file.exists()) {
+                // Crée une instance de la classe Open_Save pour ouvrir la sauvegarde
+                Open_Save openSave = new Open_Save();
                 // Si le fichier existe, affiche un message de bienvenue
                 System.out.println("Bienvenue, " + nomDresseur + " !");
                 // Ouvre la sauvegarde du dresseur
@@ -74,34 +75,33 @@ public class MainPokemon {
                     // Si le choix est 1, affiche les pokemons attrapés
                     case "1":
                         dresseur.afficherPokemonAttrape();
-                        // Affiche les options pour les pokemons attrapés
                         System.out.println("\n1. Voulez vous faire évoluer un Pokémon?");
                         System.out.println("\n2. Voulez vous transférer un Pokémon ?");
                         System.out.println("\n3. Voulez vous retourner au menu principal ?");
                         System.out.println("------------------------------------------------------------");
-                        // Lit le choix de l'utilisateur
                         String r1 = scanner.nextLine();
-                        // Si l'utilisateur veut faire évoluer un pokemon
                         if (r1.equals("1")) {
                             System.out.println("\nQuel pokémon voulez vous faire évoluer ? (1,2,3,...)");
                             int choixPokemon = scanner.nextInt();
-                            // Fait évoluer le pokemon choisi
-                            dresseur.evoluerPokemon(choixPokemon, nonEvoPokemons, evo1Pokemons, evo2Pokemons);
-                            // Attend 4 secondes
-                            Thread.sleep(10000);
-                            System.out.print("\033\143");
-                            break;
-                            // Si l'utilisateur veut transférer un pokemon
-                        } else if (r1.equals("2")) {
-                            System.out.println("\nQuel pokémon voulez vous transférer ? (1,2,3,...)");
-                            int choixPokemon = scanner.nextInt();
-                            // Transfère le pokemon choisi
-                            dresseur.transfererPokemon(choixPokemon);
-                            // Attend 4 secondes
+                            try {
+                                dresseur.evoluerPokemon(choixPokemon, nonEvoPokemons, evo1Pokemons, evo2Pokemons);
+                            } catch (IndexOutOfBoundsException e) {
+                                System.out.println("ERREUR : L'index est hors des limites de la liste.");
+                            }
                             Thread.sleep(4000);
                             System.out.print("\033\143");
                             break;
-                            // Si l'utilisateur veut retourner au menu principal
+                        } else if (r1.equals("2")) {
+                            System.out.println("\nQuel pokémon voulez vous transférer ? (1,2,3,...)");
+                            int choixPokemon = scanner.nextInt();
+                            try {
+                                dresseur.transfererPokemon(choixPokemon);
+                            } catch (IndexOutOfBoundsException e) {
+                                System.out.println("ERREUR : L'index est hors des limites de la liste.");
+                            }
+                            Thread.sleep(4000);
+                            System.out.print("\033\143");
+                            break;
                         } else if (r1.equals("3")) {
                             System.out.print("\033\143");
                             break;
@@ -110,7 +110,7 @@ public class MainPokemon {
                     case "2":
 
                         System.out.println("\nVoici votre équipe actuelle de Pokémon :");
-                        dresseur.afficherEquipe(); // Suppose que vous avez une méthode pour afficher l'équipe
+                        dresseur.afficherEquipe();
 
                         System.out.println("\nVoulez-vous ajouter un Pokémon à votre équipe ? (O/N)");
                         dresseur.afficherPokemonAttrape();
@@ -118,22 +118,29 @@ public class MainPokemon {
                         if (ajout.equals("O")) {
                             System.out.println("\nQuel Pokémon voulez-vous ajouter ? (1,2,3,...)");
                             int choixPokemon = scanner.nextInt();
-                            dresseur.ajouterEquipe(choixPokemon);
+                            try {
+                                dresseur.ajouterEquipe(choixPokemon);
+                            } catch (IndexOutOfBoundsException e) {
+                                System.out.println("ERREUR : L'index est hors des limites de la liste.");
+                            }
                         }
+
                         System.out.println("\nVoulez-vous retirer un Pokémon de votre équipe ? (O/N)");
                         String retrait = scanner.nextLine();
                         if (retrait.equals("O")) {
                             System.out.println("\nQuel Pokémon voulez-vous retirer ? (1,2,3,...)");
                             int choixPokemon = scanner.nextInt();
-                            dresseur.supprimerEquipe(choixPokemon);
-                        }
-                        else{
+                            try {
+                                dresseur.supprimerEquipe(choixPokemon);
+                            } catch (IndexOutOfBoundsException e) {
+                                System.out.println("ERREUR : L'index est hors des limites de la listes.");
+                            }
+                        } else {
                             System.out.println("\n Retour au menu principal");
                             break;
                         }
-                        
                         // Si le choix est 3, lance la méthode chassePokemon
-                        case "3":
+                    case "3":
                         String r3 = "";
                         do {
                             // Appelle la méthode chassePokemon de l'objet dresseur
@@ -149,8 +156,6 @@ public class MainPokemon {
                             }
                         } while (!r3.equals("O"));
                         break;
-                        
-
 
                     case "4":
 
@@ -169,13 +174,25 @@ public class MainPokemon {
                 }
             } while (!choix.equals("5"));
 
-        }
-        // Attrape toute exception qui pourrait être levée dans le bloc try
-        catch (Exception e) {
-            // Affiche la trace de pile de l'exception
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("L'index est hors des limites de la liste.");
+        } catch (FileNotFoundException e) {
+            System.out.println("Le fichier de sauvegarde n'a pas pu être trouvé ou ouvert.");
+        } catch (IOException e) {
+            System.out.println("Une erreur d'entrée/sortie s'est produite.");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Une classe nécessaire n'a pas été trouvée.");
+        } catch (InterruptedException e) {
+            System.out.println("Le thread a été interrompu.");
+        } catch (Exception e) {
+            // Attrape toute autre exception non spécifiquement gérée ci-dessus
             e.printStackTrace();
+        } finally {
+            // Ferme le scanner dans le bloc finally pour s'assurer qu'il est fermé même si
+            // une exception est levée
+            if (scanner != null) {
+                scanner.close();
+            }
         }
-        // Ferme le scanner pour libérer les ressources
-        scanner.close();
     }
 }

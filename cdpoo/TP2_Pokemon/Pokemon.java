@@ -2,6 +2,7 @@ package cdpoo.TP2_Pokemon;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Cette classe représente un Pokémon.
@@ -153,7 +154,18 @@ public class Pokemon implements Serializable {
         return 0;
     }
 
-    public String getnom() {
-        return null;
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Pokemon pokemon = (Pokemon) obj;
+        return pv == pokemon.pv &&
+                pc == pokemon.pc &&
+                Objects.equals(nom, pokemon.nom) &&
+                Objects.equals(type, pokemon.type) &&
+                Objects.equals(type2, pokemon.type2);
     }
+
 }
