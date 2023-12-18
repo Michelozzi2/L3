@@ -119,8 +119,7 @@ public class Dresseur implements Serializable {
             // Après l'attaque de l'adversaire, si le Pokémon est KO, le combat s'arrête
             while (selfHp > 0 && opponentHp > 0) {
                 // Attaque le Pokémon adverse
-                result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, opponentPokemon,
-                        opponentPokemon);
+                result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, selfPokemon.getNom(), opponentPokemon);
                 opponentHp -= result;
                 opponentHp = Math.max(opponentHp, 0); // Pour éviter d'avoir des PV négatifs
                 System.out.println("Vous venez d'infliger " + result + " au Pokémon adverse");
@@ -136,6 +135,7 @@ public class Dresseur implements Serializable {
                 System.out.println("Le Pokémon adverse a attaqué, votre Pokémon a subi " + result + " dégâts");
                 System.out.println("PV restant de votre Pokémon: " + selfHp);
     
+                // Après la vérification de KO du Pokémon actuel
                 if (selfHp < 1) {
                     System.out.println("Votre Pokémon est KO!");
                     index++;
@@ -143,34 +143,16 @@ public class Dresseur implements Serializable {
                         selfPokemon = (Pokemon) dresseur.getEquipe().get(index);
                         selfHp = selfPokemon.getPv();
                         System.out.println("Envoi du prochain Pokémon : " + selfPokemon.getNom());
-                
-                        // Envoi des PV du nouveau Pokémon
+    
+                        // Envoi des PV, du nom et des types du nouveau Pokémon
                         outStream.writeUTF(String.valueOf(selfHp));
                         outStream.flush();
-                
-                        // Envoi du nom du nouveau Pokémon
                         outStream.writeUTF(selfPokemon.getNom());
                         outStream.flush();
-                
-                        // Gestion des types de Pokemon
-                        String newtype = selfPokemon.getType();
-                        String newtype1 ,newtype2;
-                        if (newtype.contains("/")) {
-                            String[] types = type.split("/");
-                            newtype1 = types[0];
-                            newtype2 = types[1];
-                        } else {
-                            newtype1 = newtype;
-                            newtype2 = "none";
-                        }
-                
-                        // Envoi des types du nouveau Pokémon
-                        outStream.writeUTF(newtype1);
+                        String[] newTypes = selfPokemon.getType().split("/");
+                        outStream.writeUTF(newTypes[0]);
                         outStream.flush();
-                        outStream.writeUTF(newtype2);
-                        outStream.flush();
-                        outStream.flush();
-                        outStream.writeUTF(newtype2);
+                        outStream.writeUTF(newTypes.length > 1 ? newTypes[1] : "none");
                         outStream.flush();
                     }
                 }
@@ -179,7 +161,7 @@ public class Dresseur implements Serializable {
     
             if (opponentHp < 1) {
                 System.out.println("Félicitation, vous avez gagné!");
-                break;
+                continue;
             } else if (selfHp < 1) {
                 System.out.println("Votre Pokémon est KO!");
             } else {
@@ -187,6 +169,7 @@ public class Dresseur implements Serializable {
             }
         }
     }
+    
     
     public static void combat2(Dresseur dresseur, Socket socket) throws NumberFormatException, IOException {
         // Initialise les fonctions de communication avec le serveur
@@ -245,6 +228,7 @@ public class Dresseur implements Serializable {
                 System.out.println("Le Pokémon adverse a attaqué, votre Pokémon a subi " + result + " dégâts");
                 System.out.println("PV restant de votre Pokémon: " + selfHp);
     
+                // Après la vérification de KO du Pokémon actuel
                 if (selfHp < 1) {
                     System.out.println("Votre Pokémon est KO!");
                     index++;
@@ -252,41 +236,22 @@ public class Dresseur implements Serializable {
                         selfPokemon = (Pokemon) dresseur.getEquipe().get(index);
                         selfHp = selfPokemon.getPv();
                         System.out.println("Envoi du prochain Pokémon : " + selfPokemon.getNom());
-                
-                        // Envoi des PV du nouveau Pokémon
+                        
+                        // Envoi des PV, du nom et des types du nouveau Pokémon
                         outStream.writeUTF(String.valueOf(selfHp));
                         outStream.flush();
-                
-                        // Envoi du nom du nouveau Pokémon
                         outStream.writeUTF(selfPokemon.getNom());
                         outStream.flush();
-                
-                        // Gestion des types de Pokemon
-                        String newtype = selfPokemon.getType();
-                        String newtype1 ,newtype2;
-                        if (newtype.contains("/")) {
-                            String[] types = type.split("/");
-                            newtype1 = types[0];
-                            newtype2 = types[1];
-                        } else {
-                            newtype1 = newtype;
-                            newtype2 = "none";
-                        }
-                
-                        // Envoi des types du nouveau Pokémon
-                        outStream.writeUTF(newtype1);
+                        String[] newTypes = selfPokemon.getType().split("/");
+                        outStream.writeUTF(newTypes[0]);
                         outStream.flush();
-                        outStream.writeUTF(newtype2);
-                        outStream.flush();
-                        outStream.flush();
-                        outStream.writeUTF(newtype2);
+                        outStream.writeUTF(newTypes.length > 1 ? newTypes[1] : "none");
                         outStream.flush();
                     }
                 }
     
                 // Attaque le Pokémon adverse
-                result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, opponentPokemon,
-                        opponentPokemon);
+                result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, selfPokemon.getNom(), opponentPokemon);
                 opponentHp -= result;
                 opponentHp = Math.max(opponentHp, 0); // Pour éviter d'avoir des PV négatifs
                 System.out.println("Vous venez d'infliger " + result + " au Pokémon adverse");

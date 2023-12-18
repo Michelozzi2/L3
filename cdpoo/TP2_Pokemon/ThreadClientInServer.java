@@ -34,45 +34,49 @@ class ThreadClientInServer extends Thread {
     }
     
     //redef de la fonction run()
-    public void run(){
-      try{
+    public void run() {
+      try {
         DataInputStream inStream = new DataInputStream(serverClient.getInputStream());
         DataOutputStream outStream = new DataOutputStream(serverClient.getOutputStream());
-        String clientMessage="", serverMessage="";
-        //on ecoute le client en continu et on attend de lui
-        //soit un message soit une commande
+        String clientMessage = "", serverMessage = "";
+        
+        // On écoute le client en continu et on attend de lui
+        // soit un message soit une commande
+        while (!clientMessage.equals("quit")) {
+          clientMessage = inStream.readUTF();
 
-        //le joueur décide de quitter le combat
-        while(!clientMessage.equals("quit")){
-          clientMessage=inStream.readUTF();
-
-          //le joueur souhaite connaitre la liste des autres joueurs connectés à l'arène
-          if(clientMessage.equals("joueur")){
-            serverMessage="liste des joueur connectés:\n"+AreneServeur.format();
+          // Le joueur souhaite connaitre la liste des autres joueurs connectés à l'arène
+          if (clientMessage.equals("joueur")) {
+            serverMessage = "Liste des joueurs connectés:\n" + AreneServeur.format();
             outStream.writeUTF(serverMessage);
-            outStream.flush();   
+            outStream.flush();
           }
-          //le joueur souhaite effectuer un combat 
-          //il est placé dans la liste d'attente jusqu'à ce qu'un adversaire rejoigne la salle d'attente
-          else if(clientMessage.equals("combat")){
+          // Le joueur souhaite effectuer un combat
+          // Il est placé dans la liste d'attente jusqu'à ce qu'un adversaire rejoigne la salle d'attente
+          else if (clientMessage.equals("combat")) {
             AreneServeur.arene(this);
           }
-          //renomme le nom du thread
-          else if(clientMessage.contains("name")){
-            AreneServeur.rename(serverClient,clientMessage.split(" ")[1]);
+          // Renomme le nom du thread
+          else if (clientMessage.contains("name")) {
+            AreneServeur.rename(serverClient, clientMessage.split(" ")[1]);
           }
-          //communication utilisée lors du combat afin de transmettre les dégats infligés de part et d'autre
-          else{
-            AreneServeur.messagePerso(threadDest,this,clientMessage);
+          // Communication utilisée lors du combat afin de transmettre les dégâts infligés de part et d'autre
+          else {
+            AreneServeur.messagePerso(threadDest, this, clientMessage);
           }
         }
+
+        // Client décide de quitter le combat, envoie "exit" pour terminer la connexion proprement
+        outStream.writeUTF("exit");
+        outStream.flush();
+
         inStream.close();
         outStream.close();
         serverClient.close();
-      }catch(Exception ex){
+      } catch (Exception ex) {
         System.out.println(ex);
-      }finally{
-        System.out.println("Client -" + clientNo + " exit!! ");
+      } finally {
+        System.out.println("Client - " + clientNo + " exit!!");
       }
     }
 }
