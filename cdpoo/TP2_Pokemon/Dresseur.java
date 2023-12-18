@@ -75,7 +75,7 @@ public class Dresseur implements Serializable {
         String clientMessage = "";
     
         int index = 0;
-        while (index < dresseur.getEquipe().size()) {
+        while (!dresseur.getEquipe().isEmpty()) {
             Pokemon selfPokemon = (Pokemon) dresseur.getEquipe().get(index);
             int selfHp = selfPokemon.getPv();
             int result = 0;
@@ -117,7 +117,7 @@ public class Dresseur implements Serializable {
     
             // L'ordre est inversé en fonction du premier ou du deuxième joueur
             // Après l'attaque de l'adversaire, si le Pokémon est KO, le combat s'arrête
-            while (selfHp > 0 && opponentHp > 0) {
+            while (selfHp >= 0 && opponentHp >= 0) {
                 // Attaque le Pokémon adverse
                 result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, selfPokemon.getNom(), opponentPokemon);
                 opponentHp -= result;
@@ -127,6 +127,11 @@ public class Dresseur implements Serializable {
                 clientMessage = String.valueOf(result);
                 outStream.writeUTF(clientMessage);
                 outStream.flush();
+
+                // Vérifie si le Pokémon adverse est KO avant de se faire attaquer
+                if (opponentHp <= 0) {
+                    break;
+                }
     
                 // Se fait attaquer
                 result = Integer.parseInt(inStream.readUTF());
@@ -136,7 +141,7 @@ public class Dresseur implements Serializable {
                 System.out.println("PV restant de votre Pokémon: " + selfHp);
     
                 // Après la vérification de KO du Pokémon actuel
-                if (selfHp < 1) {
+                if (selfHp <= 0) {
                     System.out.println("Votre Pokémon est KO!");
                     index++;
                     if (index < dresseur.getEquipe().size()) {
@@ -155,14 +160,17 @@ public class Dresseur implements Serializable {
                         outStream.writeUTF(newTypes.length > 1 ? newTypes[1] : "none");
                         outStream.flush();
                     }
+                    continue;
+
                 }
+                
     
             }
     
-            if (opponentHp < 1) {
+            if (opponentHp <= 0) {
                 System.out.println("Félicitation, vous avez gagné!");
                 continue;
-            } else if (selfHp < 1) {
+            } else if (selfHp <= 0) {
                 System.out.println("Votre Pokémon est KO!");
             } else {
                 System.out.println("Erreur !!");
@@ -178,7 +186,7 @@ public class Dresseur implements Serializable {
         String clientMessage = "";
     
         int index = 0;
-        while (index < dresseur.getEquipe().size()) {
+        while (!dresseur.getEquipe().isEmpty()) {
             Pokemon selfPokemon = (Pokemon) dresseur.getEquipe().get(index);
             int selfHp = selfPokemon.getPv();
             int result = 0;
@@ -220,7 +228,7 @@ public class Dresseur implements Serializable {
     
             // L'ordre est inversé en fonction du premier ou du deuxième joueur
             // Après l'attaque de l'adversaire, si le Pokémon est KO, le combat s'arrête
-            while (selfHp > 0 && opponentHp > 0) {
+            while (selfHp >= 0 && opponentHp >= 0) {
                 // Se fait attaquer
                 result = Integer.parseInt(inStream.readUTF());
                 selfHp -= result;
@@ -229,7 +237,7 @@ public class Dresseur implements Serializable {
                 System.out.println("PV restant de votre Pokémon: " + selfHp);
     
                 // Après la vérification de KO du Pokémon actuel
-                if (selfHp < 1) {
+                if (selfHp <= 0) {
                     System.out.println("Votre Pokémon est KO!");
                     index++;
                     if (index < dresseur.getEquipe().size()) {
@@ -248,8 +256,20 @@ public class Dresseur implements Serializable {
                         outStream.writeUTF(newTypes.length > 1 ? newTypes[1] : "none");
                         outStream.flush();
                     }
+                    continue;
                 }
-    
+
+                if (inStream.available() > 0) {
+                    opponentHp = Integer.parseInt(inStream.readUTF());
+                    opponentPokemon = inStream.readUTF();
+                    opponentType1 = inStream.readUTF();
+                    opponentType2 = inStream.readUTF();
+                } 
+
+                if (opponentHp <= 0) {
+                    break;
+                }
+                
                 // Attaque le Pokémon adverse
                 result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, selfPokemon.getNom(), opponentPokemon);
                 opponentHp -= result;
@@ -261,10 +281,10 @@ public class Dresseur implements Serializable {
                 outStream.flush();
             }
     
-            if (opponentHp < 1) {
+            if (opponentHp <=0 ) {
                 System.out.println("Félicitation, vous avez gagné!");
                 continue;
-            } else if (selfHp < 1) {
+            } else if (selfHp <= 0) {
                 System.out.println("Votre Pokémon est KO!");
                 continue;
             } else {
