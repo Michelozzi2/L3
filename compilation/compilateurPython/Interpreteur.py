@@ -25,8 +25,8 @@ def interpreteur(PCODE):
     while PS!="END":
         INST=PCODE[PC][0]     
         OPERANDE=PCODE[PC][1]
-        #print("PC: {},INST: {}".format(PC,INST))
-        #print("OPERANDE: ",OPERANDE)
+        print("PC: {},INST: {}".format(PC,INST))
+        print("OPERANDE: ",OPERANDE)
         if PC<(len(PCODE)-1):
             PC+=1
         if INST=="ADD":
@@ -112,4 +112,4 @@ PCOdE = [('INT', 4), ('LDA', 2), ('LDI', '0'), 'STO', ('LDA', 3), ('LDI', '0'), 
 
 pcode = [('INT', 4), ('LDA', 2), ('LDI', '10'), 'STO', ('LDA', 3), ('LDI', '5'), 'STO', ('LDA', '0'), ('LDI', 1), ('LDA', 2), 'LDV', ('LDA', 2), 'LDV', ('LDI', 1), ('LDA', 3), 'LDV', ('LDA', 3), 'LDV', 'ADD', 'STO', 'HLT']
 
-interpreteur(pcode)
+interpreteur(PCODe)

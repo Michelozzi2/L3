@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import re
-
+import Interpreteur
 
 nom_fichier = './compilation/compilateurPython/test'
 # Ouvrir le fichier en mode lecture
@@ -97,11 +97,26 @@ def teste(test_token):
         return 0
         
 def test_et_entre(test_token, classe):
+    """
+    La fonction `test_et_entre` vérifie si un jeton de test donné réussit un test et entre dans le
+    symbole avec une classe et une valeur de décalage spécifiées.
+    
+    :param test_token: Le paramètre `test_token` est un jeton en cours de test. Il s'agit probablement
+    d'une variable ou d'une valeur transmise à la fonction
+    :param classe: Le paramètre « classe » est une variable qui représente la classe ou le type du token
+    testé. Il est utilisé comme argument lors de l'appel de la fonction "entrerSym"
+    """
     global offset
     if teste(test_token)==1:
         entrerSym(classe,value=offset)
         
 def test_et_cherche(test_token):
+    """
+    La fonction "test_et_cherche" prend en entrée un jeton de test, vérifie s'il réussit un test, puis
+    recherche un symbole.
+    
+    :param test_token: Le paramètre `test_token` est une variable qui représente un jeton
+    """
     tok=token
     if teste(test_token)==1:
         chercherSym(tok)
@@ -223,6 +238,9 @@ def lire():
     teste(")")
 
 def insts():
+    """
+    La fonction `insts` exécute une série d'instructions jusqu'à ce que le jeton de fin soit atteint.
+    """
     teste("begin")
     inst()  
     while token==";":
@@ -277,7 +295,7 @@ def generer1(m):
     global PCODE,PC
     if PC==len(liste_mots):
         print('Error len')
-    PCODE[PC]=m
+    PCODE[PC]=(m,None)
     PC+=1
     
 def generer2(m,a):
@@ -300,3 +318,5 @@ def generer2(m,a):
 program()
 
 print(PCODE)
+
+Interpreteur.interpreteur(PCODE)

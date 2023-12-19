@@ -115,9 +115,8 @@ public class Dresseur implements Serializable {
             System.out.println("L'adversaire envoie un " + opponentPokemon + " au combat");
             System.out.println("PV de votre Pokémon: " + selfHp + "; PV du Pokémon adverse: " + opponentHp);
     
-            // L'ordre est inversé en fonction du premier ou du deuxième joueur
-            // Après l'attaque de l'adversaire, si le Pokémon est KO, le combat s'arrête
-            while (selfHp >= 0 && opponentHp >= 0) {
+            // Le combat continue jusqu'à ce qu'un dresseur n'ait plus de Pokémon pouvant combattre
+            while (selfHp > 0 && opponentHp > 0) {
                 // Attaque le Pokémon adverse
                 result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, selfPokemon.getNom(), opponentPokemon);
                 opponentHp -= result;
@@ -127,9 +126,10 @@ public class Dresseur implements Serializable {
                 clientMessage = String.valueOf(result);
                 outStream.writeUTF(clientMessage);
                 outStream.flush();
-
+    
                 // Vérifie si le Pokémon adverse est KO avant de se faire attaquer
                 if (opponentHp <= 0) {
+                    System.out.println("Félicitation, vous avez gagné!");
                     break;
                 }
     
@@ -161,22 +161,11 @@ public class Dresseur implements Serializable {
                         outStream.flush();
                     }
                     continue;
-
                 }
-                
-    
-            }
-    
-            if (opponentHp <= 0) {
-                System.out.println("Félicitation, vous avez gagné!");
-                continue;
-            } else if (selfHp <= 0) {
-                System.out.println("Votre Pokémon est KO!");
-            } else {
-                System.out.println("Erreur !!");
             }
         }
     }
+    
     
     
     public static void combat2(Dresseur dresseur, Socket socket) throws NumberFormatException, IOException {
@@ -226,9 +215,8 @@ public class Dresseur implements Serializable {
             System.out.println("L'adversaire envoie un " + opponentPokemon + " au combat");
             System.out.println("PV de votre Pokémon: " + selfHp + "; PV du Pokémon adverse: " + opponentHp);
     
-            // L'ordre est inversé en fonction du premier ou du deuxième joueur
-            // Après l'attaque de l'adversaire, si le Pokémon est KO, le combat s'arrête
-            while (selfHp >= 0 && opponentHp >= 0) {
+            // Le combat continue jusqu'à ce qu'un dresseur n'ait plus de Pokémon pouvant combattre
+            while (selfHp > 0 && opponentHp > 0) {
                 // Se fait attaquer
                 result = Integer.parseInt(inStream.readUTF());
                 selfHp -= result;
@@ -244,7 +232,7 @@ public class Dresseur implements Serializable {
                         selfPokemon = (Pokemon) dresseur.getEquipe().get(index);
                         selfHp = selfPokemon.getPv();
                         System.out.println("Envoi du prochain Pokémon : " + selfPokemon.getNom());
-                        
+    
                         // Envoi des PV, du nom et des types du nouveau Pokémon
                         outStream.writeUTF(String.valueOf(selfHp));
                         outStream.flush();
@@ -258,18 +246,18 @@ public class Dresseur implements Serializable {
                     }
                     continue;
                 }
-
+    
                 if (inStream.available() > 0) {
                     opponentHp = Integer.parseInt(inStream.readUTF());
                     opponentPokemon = inStream.readUTF();
                     opponentType1 = inStream.readUTF();
                     opponentType2 = inStream.readUTF();
-                } 
-
+                }
+    
                 if (opponentHp <= 0) {
                     break;
                 }
-                
+    
                 // Attaque le Pokémon adverse
                 result = GestionTypeCombat.attackOnline(selfPokemon, opponentType1, opponentType2, selfPokemon.getNom(), opponentPokemon);
                 opponentHp -= result;
@@ -281,7 +269,7 @@ public class Dresseur implements Serializable {
                 outStream.flush();
             }
     
-            if (opponentHp <=0 ) {
+            if (opponentHp <= 0) {
                 System.out.println("Félicitation, vous avez gagné!");
                 continue;
             } else if (selfHp <= 0) {
@@ -578,8 +566,6 @@ public class Dresseur implements Serializable {
                 }
             }
 
-            System.out.println("INDEX POKEMON : " + indexPokemon);
-
             // Vérifie si le dresseur a suffisamment de bonbons pour faire évoluer le
             // Pokémon
 
@@ -591,9 +577,16 @@ public class Dresseur implements Serializable {
                             evo2Pokemons);
                     // Si le Pokémon peut évoluer à la troisième évolution
                     if (evolution2 != null) {
+
+                        int indexEquipe = equipe.indexOf(pokemonAttrape.get(choixPokemon));
+                        if (indexEquipe != -1) {
+                            equipe.set(indexEquipe, evolution2);
+                        }
+
                         // Remplace le Pokémon dans la liste des Pokémons attrapés par sa troisième
                         // évolution
                         pokemonAttrape.set(choixPokemon, evolution2);
+
                         // Affiche un message indiquant que le Pokémon a évolué
                         System.out.println("\nLe Pokémon a évolué en " + evolution2.getNom() + " !");
                         System.out.println("------------------------------------------------------------");
@@ -612,37 +605,32 @@ public class Dresseur implements Serializable {
                 else if (pokemonAttrape.get(choixPokemon) instanceof Pokemon) {
                     // Fait évoluer le Pokémon à la deuxième évolution
                     Pokemon_evolution1 evolution1 = Pokemon.evoluer1(indexPokemon, nonEvoPokemons, evo1Pokemons);
+
+                    int indexEquipe = equipe.indexOf(pokemonAttrape.get(choixPokemon));
+                    if (indexEquipe != -1) {
+                        equipe.set(indexEquipe, evolution1);
+                        afficherEquipe();
+                    }
                     // Remplace le Pokémon dans la liste des Pokémons attrapés par sa deuxième
                     // évolution
                     pokemonAttrape.set(choixPokemon, evolution1);
+
                     // Affiche un message indiquant que le Pokémon a évolué
                     System.out.println("\nLe Pokémon a évolué en " + evolution1.getNom() + " !");
                     System.out.println("------------------------------------------------------------");
-                    // Si le Pokémon est de la deuxième évolution
                 }
 
                 // Supprime 5 bonbons du type du Pokémon de la réserve de bonbons
                 Bonbons.supprimerBonbons(nonEvoPokemons.get(indexPokemon).getType(), 5);
                 // Affiche un message indiquant que 5 bonbons du type du Pokémon ont été
                 // utilisés
-                System.out.println(
-                        "5 bonbons de type " + nonEvoPokemons.get(indexPokemon).getType() + " ont été utilisés.");
 
                 // Vérifie si le Pokémon a un deuxième type
                 if (nonEvoPokemons.get(indexPokemon).getType2() != null) {
                     // Si oui, supprime 5 bonbons du deuxième type du Pokémon de la réserve de
                     // bonbons
                     Bonbons.supprimerBonbons(nonEvoPokemons.get(indexPokemon).getType2(), 5);
-                    // Affiche un message indiquant que 5 bonbons du deuxième type du Pokémon ont
-                    // été utilisés
-                    System.out.println(
-                            "5 bonbons de type " + nonEvoPokemons.get(indexPokemon).getType2() + " ont été utilisés.");
-                }
-                // Si le dresseur n'a pas suffisamment de bonbons pour faire évoluer le Pokémon
-                else {
-                    // Affiche un message indiquant que le dresseur n'a pas assez de bonbons pour
-                    // faire évoluer le Pokémon
-                    System.out.println("Vous n'avez pas assez de bonbons pour faire évoluer ce pokémon");
+
                 }
             }
         } catch (IndexOutOfBoundsException e) {
