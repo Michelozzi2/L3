@@ -1,0 +1,117 @@
+import random
+
+def gen_list_random_int(int_binf:  int=0, int_bsup: int= 10)->list:
+    """
+    Cette fonction prend 2 nombres entiers et genere et retourne une liste entre ces 2 nombre
+
+    Args:
+        int_binf:  nombre entier inférieur
+        int_bsup: nombre entier superieur
+
+    Returns:
+        list: liste de nombres entiers melangé entre les bornes inferieur et superieur
+    """
+    list = [random.randint(int_binf, int_bsup) for i in range(5)]
+    return list
+
+"""
+def mix_list(list_to_mix):
+new_liste = []
+
+while len(new_liste) < len(list_to_mix) :
+    indice_random = random.randint(0,len(list_to_mix)-1)
+    if list_to_mix[indice_random] not in new_liste:
+        new_liste.append(list_to_mix[indice_random])
+return new_liste
+
+"""
+
+
+def mix_list(list_to_mix: list)->list:
+    """
+    Cette fonction prend une liste en parametre et retourne cette liste melangée
+
+    Args:
+        list_to_mix (list): liste de nombres entiers
+
+    Returns:
+        list: liste de nombres entiers melangé
+    """
+    new_list = list_to_mix.copy()
+    n = len(new_list)
+
+    for i in range(n - 1, 0, -1):
+        j = random.randint(0, i)
+        new_list[i], new_list[j] = new_list[j], new_list[i]
+
+    return new_list
+
+
+
+def choose_element_list(list_in_which_to_choose: list):
+    """_summary_
+    Cette fonction prend une liste en parametre et renvoi un element de la liste au hasard
+
+    Args:
+        list_in_which_to_choose (list): Une liste d'elements
+
+    Returns:
+        any: Un element de la liste
+    """
+    return list_in_which_to_choose[random.randint(0,len(list_in_which_to_choose)-1)]
+
+
+
+def extract_elements_list(list_in_which_to_choose: list ,int_nbr_of_element_to_extract: list)->list:
+    """_summary_
+
+    Cette fonction prend une liste en parametre et retourne une liste en fonction de la taille d'un entier.
+
+    Args:
+        list_in_which_to_choose (list): Une liste d'elements
+        int_nbr_of_element_to_extract (list): Un nombre entier
+
+    Returns:
+        list: Une liste d'elements de la taille de l'entier
+    """
+    return[choose_element_list(list_in_which_to_choose)for i in range(int_nbr_of_element_to_extract)]
+
+
+
+def test():
+    #int_binf = int(input("Entrer le nombre inferieur: "))
+    #int_bsup = int(input("Entrer le nombre superieur: "))
+    #print(gen_list_random_int(int_binf, int_bsup))
+
+    # Test de votre code
+    lst_sorted=[i for i in range(10)]
+    print(lst_sorted)
+    print('Liste triée de départ',lst_sorted)
+    mixed_list=mix_list(lst_sorted)
+    print('Liste mélangée obtenue',mixed_list)
+    print('Liste triée de départ après appel à mixList, elle doit être inchangée',lst_sorted)
+    #assert (cf. doc en ligne) permet de vérifier qu’une condition 
+    #est vérifiée en mode debug (désactivable)
+    assert lst_sorted != mixed_list,"Les deux listes doivent être différente après l'appel à mixList..."
+    print("\n")
+
+    
+"""
+    # Test de votre code
+    print('Liste triée de départ',lst_sorted)
+    e1 = choose_element_list(lst_sorted)
+    print('A la première exécution',e1,'a été sélectionné')
+    e2 = choose_element_list(lst_sorted)
+    print('A la deuxième exécution',e2,'a été sélectionné')
+    assert e1 != e2,"Attention vérifiez votre code, pour deux sélections de suite l'élément sélectionné est le même !"
+    print("\n")
+
+
+    # Test de votre code
+    print('Liste de départ',lst_sorted)
+    sublist = extract_elements_list(lst_sorted,5)
+    print('La sous liste extraite est',sublist)
+    print('Liste de départ après appel de la fonction est',lst_sorted)
+"""
+
+test()

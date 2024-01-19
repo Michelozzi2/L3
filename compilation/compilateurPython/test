@@ -1,8 +1,0 @@
-program abc ; const C = 0 ; var A , B ;
-begin
-A := 10 ;
-B := 5 ;
-C := A + B;
-end ;
-read(C)
-end .

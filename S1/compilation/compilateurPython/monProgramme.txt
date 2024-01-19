@@ -1,0 +1,11 @@
+program abc ; const C = 10 ; var A,B ;
+begin
+A := 1 ;
+B := 2 ;
+while A <> 0 do
+begin
+read(A);
+B := A + B;
+end ;
+write(B)
+end .
