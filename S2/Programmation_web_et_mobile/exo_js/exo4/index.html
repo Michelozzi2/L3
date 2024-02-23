@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="Content-language" content="french">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="Jeu corse A Mora">
+    <meta name="keywords" content="Jeu corse Mora">
+    <meta name="Author" content="Michelozzi Matthieu">
+    <meta http-equiv="Reply-to" content="michelozzimatthieu@gmail.com">
+    <meta name="Rating" content="General">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="mora.css">
+    <script src="mora.js" async="false"></script>
+    <title>Mora</title>
+</head>
+
+<body>
+    <nav class="navbar is-dark">
+        <div class="navbar-brand">
+            <a class="navbar-item" id="titre">
+                A Mora
+            </a>
+        </div>
+    </nav>
+
+    <div class="content">
+
+        <div class="columns is-mobile is-centered mt-2 ">
+            <div class="is-half">
+                <div class="card is-rounded ">
+                    <header class="card-header has-background-dark ">
+                        <p class="card-header-title  has-text-white">
+                            Pseudo
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <input class="input is-small is-link" type="text" placeholder="Entrez votre pseudo" id="pseudo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+
+        <div class="columns mx-1">
+            <div class="column">
+                <div class="card">
+                    <header class="card-header has-background-dark ">
+                        <p class="card-header-title  has-text-white">
+                            Joueur
+                        </p>
+                    </header>
+                    <div class="card-content">
+                        <div class="content">
+                            <p>Choix nombre: <output id="choice_player"></output></p>
+                            <input id="select_choice_player" class="input is-small is-rounded is-link" type="range"
+                                placeholder="Text input" name="volume" min="1" max="5" step="any"> </br>
+
+                            <p>Choix somme entre les deux joueurs: <output id="choice_res_player"></output></p>
+                            <input id="select_choice_res_player" class="input is-small is-rounded is-link" type="range"
+                                placeholder="Text input" name="volume" min="2" max="10" step="any">
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        
+
+            <div class="column">
+                <div class="card">
+
+                    <header class="card-header has-background-dark ">
+                        <p class="card-header-title  has-text-white">
+                            Resultat
+                        </p>
+                    </header>
+
+                    <div class="card-content">
+                        <div class="content" id="card_hide">
+                            <div class="block">
+                                <span class="tag is-medium " id="player_result"></span>
+                            </div>
+                            <div class="block">
+                                <span class="tag is-medium is-link is-light" id="gagnant"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons is-centered">
+                        <button class="button is-link is-light is-rounded" id="play_button">Joué</button>
+                    </div>
+                    
+                </div>
+            </div>
+
+
+            <div class="column">
+                <div class="card">
+
+                    <header class="card-header has-background-dark ">
+                        <p class="card-header-title  has-text-white">
+                            Ordinateur
+                        </p>
+                    </header>
+
+                    <div class="card-content">
+                        <div class="content ">
+                            <p>Choix nombre: <output id="choice_bot"></output></p>
+                            <input id="select_choice_bot" class="input is-small is-rounded is-link" type="range"
+                                placeholder="Text input" name="volume" min="1" max="5" step="any"> </br>
+
+                            <p>Choix somme entre les deux joueurs: <output id="choice_res_bot"></output></p>
+                            <input id="select_choice_res_bot" class="input is-small is-rounded is-link" type="range"
+                                placeholder="Text input" name="volume" min="2" max="10" step="any">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="Content-language" content="french">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="Jeu corse A Mora">
+    <meta name="keywords" content="Jeu corse Mora">
+    <meta name="Author" content="Michelozzi Matthieu">
+    <meta http-equiv="Reply-to" content="michelozzimatthieu@gmail.com">
+    <meta name="Rating" content="General">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="mora.css">
+    <script src="bdd.js" async="false"></script>
+    <title>Etudiant</title>
+</head>
+
+<body>
+    <nav class="navbar is-dark">
+        <div class="navbar-brand">
+            <a class="navbar-item" id="titre">
+                Données éleves
+            </a>
+        </div>
+    </nav>
+
+    <h1 class="title is-1 has-text-centered mt-2">Fichier excel</h1>
+
+    <div class="columns is-mobile is-centered mt-1 mx-2">
+        <form action="bdd.php" method="post" enctype="multipart/form-data" class="field">
+            <div class="columns">
+                <div class="column">
+                    <div class="file has-name">
+                        <label class="file-label">
+                            <input class="file-input" type="file" name="file" id="fileInput">
+                            <span class="file-cta">
+                                <span class="file-label">
+                                    Choisir un fichier...
+                                </span>
+                            </span>
+                            <span class="file-name" id="fileName">
+                            </span>
+                        </label>
+                    </div>
+                </div>
+                <div class="column">
+                    <input class="input is-normal" type="text" placeholder="Entrez un nom" id="nameInput">
+                    <div class="suggestions"></div>
+                </div>
+            </div>
+            <button class="button is-outlined mt-1 " type="submit" name="submit">Envoyer</button>
+        </form>
+    </div>
+
+
+    <table class="table is-fullwidth" id="studentTable">
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Promo</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+
+</body>
+
+</html>
