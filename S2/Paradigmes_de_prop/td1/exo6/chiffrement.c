@@ -66,7 +66,7 @@ int main() {
 }
 */
 
-#include <ncurses.h>
+//#include <curses.h>
 
 void encrypt(char *word, int key) {
     int i = 0;
@@ -87,7 +87,7 @@ int main() {
 
     initscr(); // start curses mode
     cbreak(); // Line buffering disabled, Pass on everything to me
-    keypad(stdscr, TRUE); // I need that nifty F1
+    //keypad(stdscr, TRUE); // I need that nifty F1
     noecho(); // Don't echo() while we do getch
 
     printw("Enter a key: ");
