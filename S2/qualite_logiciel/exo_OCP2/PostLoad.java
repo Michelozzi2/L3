@@ -6,4 +6,9 @@ public class PostLoad extends Event {
 		super("PostLoad");
 	}
 
+	@Override
+    public void handle(EventInterceptor ei, Object entity) {
+        ei.preLoad(entity);
+    }
+
 }

@@ -6,4 +6,9 @@ public class PrePersist extends Event {
 		super("prePersist");
 	}
 
+	@Override
+	public void handle(EventInterceptor ei, Object entity) {
+		ei.prePersist(entity);
+	}
+
 }

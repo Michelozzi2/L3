@@ -6,4 +6,9 @@ public class PostPersist extends Event {
 		super("postPersist");
 	}
 
+	@Override
+	public void handle(EventInterceptor ei, Object entity) {
+		ei.postPersist(entity);
+	}
+
 }

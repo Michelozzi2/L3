@@ -3,6 +3,27 @@
     "configurations": [
         {
             "type": "java",
+            "name": "TestCommande",
+            "request": "launch",
+            "mainClass": "qualite_logiciel.exo_DIP1.TestCommande",
+            "projectName": "S2_c60e5e62"
+        },
+        {
+            "type": "java",
+            "name": "test",
+            "request": "launch",
+            "mainClass": "qualite_logiciel.exo_LSP2.test",
+            "projectName": "S2_c60e5e62"
+        },
+        {
+            "type": "java",
+            "name": "testOcp2",
+            "request": "launch",
+            "mainClass": "qualite_logiciel.exo_OCP2.testOcp2",
+            "projectName": "S2_c60e5e62"
+        },
+        {
+            "type": "java",
             "name": "TestCaculator",
             "request": "launch",
             "mainClass": "qualite_logiciel.exo_OCP.TestCaculator",

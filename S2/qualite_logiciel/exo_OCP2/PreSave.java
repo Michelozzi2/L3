@@ -6,4 +6,9 @@ public class PreSave extends Event {
 		super("preSave");
 	}
 
+	@Override
+	public void handle(EventInterceptor ei, Object entity) {
+		ei.preSave(entity);
+	}
+
 }

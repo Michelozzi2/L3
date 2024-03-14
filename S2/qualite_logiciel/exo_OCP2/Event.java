@@ -8,4 +8,6 @@ public abstract class Event {
 	public String toString() {
 		return name;
 	}
+
+	public abstract void handle(EventInterceptor ei, Object entity);
 }
