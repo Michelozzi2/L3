@@ -1,30 +1,68 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdbool.h>
+#include "util_rand.h"
+
 
 #define VALEUR_MAX_DE 6
 
 // Fonction pour lancer un dé
 int lancer_de() {
-    return rand() % VALEUR_MAX_DE + 1;
+    return randint_max(VALEUR_MAX_DE) + 1;
 }
+
 
 // Fonction pour lancer plusieurs dés et retourner le score total
 int lancer_des(int *nombre_des) {
-    int total = 0;
-    for (int i = 0; i < *nombre_des; i++) {
-        int lancer = lancer_de();
-        printf("Dé %d: %d\n", i + 1, lancer);
-        total += lancer;
+    int faces[6] = {0,0,0,0,0,0};
+    int identiques;
+
+    do {
+        // Réinitialisez le tableau de faces et la variable identiques
+        for(int i = 0; i < 6; i++) {
+            faces[i] = 0;
+        }
+        identiques = 0;
+
+        // Lancez les dés et comptez les faces
+        for(int i = 0; i < *nombre_des; i++) {
+            int lancer = lancer_de();
+            faces[lancer-1]++;
+            printf("Des %d: %d\n", i+1, lancer);
+        }
+
+        // Vérifiez s'il y a des faces identiques
+        int arretPossible = 1;
+        for(int i = 0; i < 6 && arretPossible; i++) {
+            if (faces[i] > 1) {
+                identiques = 1;
+                arretPossible = 0;
+                
+            }
+        }
+
+        if(identiques) {
+            printf("Relancez les des!\n");
+            printf("\n");
+        } 
+    } while(identiques);
+
+    // Calculez le score total
+    int score = 0;
+    for(int i = 0; i < 6; i++) {
+        score += (i+1) * faces[i];
     }
-    return total;
+
+    return score;
+
 }
 
 int main() {
-    srand(time(NULL)); // Initialiser le générateur de nombres aléatoires
-
+    srand(time(NULL));
+   
     int nombre_des;
-    printf("Entrez le nombre de dés à lancer (1-4): ");
+    printf("Entrez le nombre de des a lancer (1-4): ");
     scanf("%d", &nombre_des);
 
     if (nombre_des < 1 || nombre_des > 4) {
