@@ -1,4 +1,7 @@
 import Debug.Trace
+import Text.XHtml (base, background)
+import Control.Arrow (ArrowApply(app))
+import Language.Haskell.TH (listE)
 {-# ANN module ("HLint: ignore Use guards" :: String) #-}
 
 factorial :: Integer -> Integer
@@ -104,4 +107,48 @@ divisionEntiereAcc a n = divisionEntiereAux 0 a n
             | n > 0 = divisionEntiereAux (acc + 1) (a - n) n
             | otherwise = error "La division entière n'est pas définie pour les nombres négatifs."
    
+curry f x y = f (x, y)
+curry ::((x, y) -> z) -> x -> y -> z
+const x y = x
+const:: a -> b -> a
+apply f x = f x
+apply::(a->b)->a->b
+appl (f, x) = f x
+appl::(a->b,a)->b
+flip f x y = f y x
+flip::(a->b->c)->b->a->c
+subst f g x = f x (g x)
+subst::(a->b->c)->(a->b)->a->c
+map'::(a->b)->[a]->[b]
+
+map' f liste
+    | null liste = []
+    | otherwise = f (head liste) : map' f (tail liste)
+    
+
+
+--(float,([char],[Int]))
+--[[Int]]
+--([char],[[Int]])
+
+--equation gardée
+tailleListeAcc :: [a] -> Int
+tailleListeAcc l = tailleListeAux 0 l
+    where
+        tailleListeAux acc l
+            | null l = acc
+            | otherwise = tailleListeAux (acc + 1) (tail l)
+
+
+length3 :: Num a1 => [a2] -> a1
+length3 liste
+    | null liste = 0
+    | otherwise = 1 + length3 (tail liste)
+
+
+length4 :: [a] -> Int
+length4 liste = lengthAux 0 liste
+    where
+        lengthAux acc [] = acc
+        lengthAux acc (x:xs) = lengthAux (acc + 1) xs
 

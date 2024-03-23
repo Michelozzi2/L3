@@ -1,0 +1,8 @@
+.suggestions {
+    position: absolute;
+    width: 200px; /* Ajustez la largeur selon vos besoins */
+    max-height: 200px; /* Ajustez la hauteur maximale selon vos besoins */
+    overflow-y: auto; /* Ajoute une barre de défilement si nécessaire */
+    background-color: white; /* Ajustez la couleur d'arrière-plan selon vos besoins */
+    border: 1px solid #ccc; /* Ajustez la bordure selon vos besoins */
+}

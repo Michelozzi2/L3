@@ -4,8 +4,8 @@
 <head>
     <meta name="Content-language" content="french">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="description" content="Jeu corse A Mora">
-    <meta name="keywords" content="Jeu corse Mora">
+    <meta name="description" content="Hackathon">
+    <meta name="keywords" content="Interface gestion hackathon">
     <meta name="Author" content="Michelozzi Matthieu">
     <meta http-equiv="Reply-to" content="michelozzimatthieu@gmail.com">
     <meta name="Rating" content="General">
@@ -13,10 +13,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <link rel="stylesheet" type="text/css" href="mora.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <script src="bdd.js" async="false"></script>
-    <title>Etudiant</title>
+    <title>Hackathon</title>
 </head>
+
+
 
 <body>
     <nav class="navbar is-dark">
@@ -48,7 +50,7 @@
                 </div>
                 <div class="column">
                     <input class="input is-normal" type="text" placeholder="Entrez un nom" id="nameInput">
-                    <div class="suggestions"></div>
+                    <div id="suggestions" class="suggestions"></div>
                 </div>
             </div>
             <button class="button is-outlined mt-1 " type="submit" name="submit">Envoyer</button>
