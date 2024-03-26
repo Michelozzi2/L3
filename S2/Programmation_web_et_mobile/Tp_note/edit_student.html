@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="Content-language" content="french">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="Hackathon">
+    <meta name="keywords" content="Interface gestion hackathon">
+    <meta name="Author" content="Michelozzi Matthieu">
+    <meta http-equiv="Reply-to" content="michelozzimatthieu@gmail.com">
+    <meta name="Rating" content="General">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="bdd.js" async="false"></script>
+    <title>Hackathon</title>
+</head>
+
+
+<body>
+    <nav class="navbar is-dark">
+        <div class="navbar-brand">
+            <a class="navbar-item" id="titre" href="index.html">
+                Données éleves
+            </a>
+            <a class="navbar-item" href="edit_student.html">
+                Modifier élève
+            </a>
+        </div>
+    </nav>
+
+    <h1 class="title is-1 has-text-centered mt-2">Skills</h1>
+
+    <div class="columns">
+        <div class="column is-one-third mt-8">
+            <div class="field ml-5">
+                <label class="label">Nom</label>
+                <div class="control input-short">
+                    <input class="input" type="text" placeholder="Nom" id="name">
+                </div>
+            </div>
+            
+            <div class="field ml-5">
+                <label class="label">Prénom</label>
+                <div class="control input-short">
+                    <input class="input" type="text" placeholder="Prénom" id="firstName">
+                </div>
+            </div>
+            
+            <div class="field ml-5">
+                <label class="label">Promo</label>
+                <div class="control input-short">
+                    <input class="input" type="email" placeholder="Promo" id="email">
+                </div>
+            </div>
+            
+            <div class="field ml-5">
+                <label class="label">Compétences</label>
+                <div class="control">
+                    <textarea class="textarea" placeholder="Compétences" id="skills"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="columns is-mobile mt-1 mx-2">
+                <form action="bdd.php" method="post" enctype="multipart/form-data" class="field">
+                    <div class="columns">
+                        <div class="column is-11">
+                            <input class="input is-normal" type="text" placeholder="Entrez un nom" id="nameInput">
+                            <div id="suggestions" class="suggestions"></div>
+                        </div>
+                        <div class="column is-1">
+                            <button class="button is-outlined mt-1 " type="submit" name="submit">Modifier</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+</body>

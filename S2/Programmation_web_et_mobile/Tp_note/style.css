@@ -6,3 +6,12 @@
     background-color: white; /* Ajustez la couleur d'arrière-plan selon vos besoins */
     border: 1px solid #ccc; /* Ajustez la bordure selon vos besoins */
 }
+
+.mt-8 {
+    margin-top: 5rem;
+}
+
+.input-short {
+    width: 60%;
+}
+

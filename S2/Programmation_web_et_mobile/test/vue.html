@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="color-scheme" content="dark light">
+    <meta charset="utf-8">
+    <meta name="description" content="Les balises méta codent les informations de pages HTML pour les navigateurs et les moteurs de recherche. Mais quelles données sont vraiment importantes ? "/>
+    <meta name="keywords" content="mot-clé 1, mot-clé 2, mot-clé 3"/>
+    <meta name="author" content="nom de l’auteur" />    
+    <meta name="copyright" content="propriétaire du copyright" />
+    <meta name="robots" content="index"/>
+    <meta name="robots" content="follow"/>
+    <meta http-equiv="cache-control" content="no-cache"/>
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.15.21/dist/css/uikit.min.css" />
+    <script>
+        window.addEventListener('load', function () {
+            file = "jeu.js";
+            tag = document.createElement('script');
+            tag.setAttribute("type","text/javascript");
+            tag.setAttribute("src", file);
+            document.getElementsByTagName('head')[0].appendChild(tag);
+            console.log('le fichier js est chargé.');
+        });
+    </script>
+<title>exemple de code cours 2023</title>
+</head>
+<body class="uk-background-muted uk-padding-small uk-panel">
+    <header>
+        <h1 class="uk-text-center" > Jeu développé en L3 promo 2023</h1>
+        <nav class="uk-navbar-container" uk-navbar="mode: click">
+            <div class="uk-navbar-right">
+                <ul class="uk-navbar-nav">
+                    <li class="uk-active"><a href="#">Home</a></li>
+                    <li>
+                        <a href="#">Compte</a>
+                        <div class="uk-navbar-dropdown">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li class="uk-active"><a href="#">Mon Score</a></li>
+                                <li><a href="#bestscore" id="idbestscore">Best Scores</a></li>
+                                <li><a href="#">Autre</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li><a href="#idfooter">Liens</a></li>
+                </ul>
+            </div>
+        </nav>
+        <p class="uk-text-italic"> <a class="uk-text-decoration-none" href="http://www.corsica-guide.corsica/jeu-de-la-mora.html">A Mora</a> : les deux adversaires affichent avec une de leurs mains, un nombre compris entre 1 et 5, en même temps qu'ils annoncent de vive voix un nombre. Le but est d'annoncer le résultat de l'addition des 2 mains des deux adversaires. </p>
+    </header>
+
+<label>Quel est votre nom : </label>
+<input type="text" id="idusername" name="username" placeholder="saisir votre nom" pattern=".{6,}"" />
+<input class="uk-button uk-button-primary uk-button-small" type="submit" id="idsubmit" name="savegame" value="Save" />
+<span id="idmessage"></span>
+<hr>
+
+<div class="uk-child-width-expand@s uk-text-center" uk-grid>
+    <div>
+        <div class="uk-card uk-card-default uk-card-body">
+            <h2> Joueur</h2>
+            <h2>Nombre entre 1 et 5 : </h2>
+            <p><input type="range" min="1" max="5" value="3" step="1" id="idusernbr" name="usernbr" /> Nombre: <output id="valuenbr"></output></p>
+            <h2>Somme entre 1 et 10 : </h2>
+            <p><input type="range" min="1" max="10" value="5" step="1"  id="idusersum" name="usersum" /> Somme: <output id="valuesum"></output></p>
+        </div>
+    </div>
+
+    <div>
+        <div class="uk-card uk-card-default uk-card-body">
+            <h2 class="uk-text-primary"> VS </h2>
+            <h3 class="uk-text-primary"> <span id="spanusername"> Joueur</span> < Résultat > Ordinateur </h3> 
+            <h3 class="uk-text-primary"><span id="idspanusersum">  </span> <  <span id="resultat"> </span> > <span id="idspanpcsum"></h3> 
+            <h2 class="uk-text-success"><span id="winner"></span></h2>
+            <h2 class="uk-text-primary"> Score : <span id="idscore"></span></h2>
+        </div>
+    </div>
+
+    <div>
+        <div class="uk-card uk-card-default uk-card-body">
+            <h2 class="uk-text-warning"> Ordinateur </h2>
+            <h2 class="uk-text-warning">Nombre de l'ordinateur : </h2>
+            <div id="idpcnbr"></div>
+            <h2 class="uk-text-warning">Somme de l'ordinateur : </h2>
+            <div id="idpcnsum"></div>
+
+        </div>
+    </div>
+</div>
+<div class="uk-flex uk-flex-center">
+    <div class="uk-card uk-card-default uk-card-body" id="bestscore" style="visibility:hidden;"></div>
+</div>
+<footer id="idfooter"><p class="uk-text-center"><a class="uk-text-decoration-none">contact</a></p></footer>
+</body>
+<!-- 
+<script src="jeu.js>"></script>
+-->
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.21/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.15.21/dist/js/uikit-icons.min.js"></script>
+</html> 

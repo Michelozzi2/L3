@@ -14,7 +14,7 @@ try {
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Prépare une requête SQL pour sélectionner les étudiants dont le nom ou le prénom contient la chaîne de recherche
-    $stmt = $conn->prepare("SELECT Nom, Prenom FROM students WHERE Nom LIKE :search OR Prenom LIKE :search");
+    $stmt = $conn->prepare("SELECT Nom, Prenom, Promo FROM students WHERE Nom LIKE :search OR Prenom LIKE :search");
     // Exécute la requête avec la chaîne de recherche
     $stmt->execute(['search' => '%' . $search . '%']);
 
