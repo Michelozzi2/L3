@@ -29,10 +29,13 @@
             <a class="navbar-item" href="edit_student.html">
                 Modifier élève
             </a>
+            <a class="navbar-item" href="edit_team.html">
+                Mon équipe
+            </a>
         </div>
     </nav>
 
-    <h1 class="title is-1 has-text-centered mt-2">Fichier CSV</h1>
+    <h1 class="title is-1 has-text-centered mt-2">Étudiants</h1>
 
     <div class="columns is-mobile is-centered mt-1 mx-2">
         <form action="bdd.php" method="post" enctype="multipart/form-data" class="field">
@@ -61,17 +64,19 @@
     </div>
 
 
-    <table class="table is-fullwidth" id="studentTable">
-        <thead>
-            <tr>
-                <th>Nom</th>
-                <th>Prenom</th>
-                <th>Promo</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table class="table is-fullwidth" id="studentTable">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Promo</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
 
 
 </body>

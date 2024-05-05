@@ -7,6 +7,14 @@ int main() {
     // Créer une nouvelle pile
     Stack* my_stack = init_stack();
 
+    // test pour voir si a pile est vide
+
+    if (is_empty(my_stack)) {
+        printf("La pile est vide\n");
+    } else {
+        printf("La pile n'est pas vide\n");
+    }
+
     // Empiler quelques valeurs
     push(my_stack, 1);
     push(my_stack, 2);

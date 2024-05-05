@@ -1,31 +1,38 @@
 #include <stdio.h>
 #include "hashtable.h"
 
-int main() {
-    char key[256];
-    char value[256];
+int main()
+{
+    // Création d'une nouvelle table de hachage
+    ht_hash_table *tab = hsht_new(10);
 
-    // Crée une table de hachage
-    ht_hash_table * table = hsht_new(10);
+    // Insertion de quelques paires clé-valeur
+    hsht_insert(tab, "clé1", "valeur1");
+    hsht_insert(tab, "clé2", "valeur2");
+    hsht_insert(tab, "clé3", "valeur3");
 
-    // Demande à l'utilisateur d'entrer une clé et une valeur
-    printf("Entrez une clé : ");
-    scanf("%255s", key);
-    printf("Entrez une valeur : ");
-    scanf("%255s", value);
+    for (int i = 0; i < tab->size; i++)
+    {
+        hsht_key_value_pair *item = tab->kv_items[i];
+        if (item != NULL)
+        {
+            printf("Clé : %s, Valeur : %s\n", item->key, item->value);
+        }
+    }
+    printf("\nLa valeur rechercher est :%s\n", hsht_search(tab, "clé1"));
+    hsht_delete(tab, "clé1");
 
-    // Crée un nouvel élément avec la clé et la valeur 
-    hsht_key_value_pair * element = hsht_new_key_value_pair(key, value);
+    for (int i = 0; i < tab->size; i++)
+    {
+        hsht_key_value_pair *item = tab->kv_items[i];
+        if (item != NULL)
+        {
+            printf("Clé : %s, Valeur : %s\n", item->key, item->value);
+        }
+    }
 
-    // Ajoute l'élément à la table
-    table->kv_items[0] = element;
-
-    // Affiche la clé et la valeur de l'élément ajouté
-    printf("Clé ajoutée : %s\n", table->kv_items[0]->key);
-    printf("Valeur ajoutée : %s\n", table->kv_items[0]->value);
-
-    // Détruit la table et les éléments
-    hsht_del(table);
+    // Suppression de la table de hachage
+    hsht_del(tab);
 
     return 0;
 }

@@ -47,10 +47,14 @@ function updateTable(data) {
     });
 }
 
+
+
 // Récupère la liste initiale des étudiants depuis le serveur
 fetch('get_students.php')
     .then(response => response.json()) // Convertit la réponse en JSON
     .then(updateTable); // Met à jour la table avec les données reçues
+
+    
 
 // Ajoute un écouteur d'événements à l'élément d'entrée pour le nom
 var nameInput = document.querySelector('#nameInput');
@@ -64,29 +68,35 @@ if (nameInput) {
             fetch('suggestion.php?query=' + search)
                 .then(response => response.json()) // Convertit la réponse en JSON
                 .then(data => {
-                    // Efface les suggestions actuelles
-                    suggestions.innerHTML = '';
+                   if (suggestions){
+                        // Efface les suggestions actuelles
+                        suggestions.innerHTML = '';
 
-                    // Ajoute les nouvelles suggestions
-                    data.forEach(row => {
-                        var div = document.createElement('div'); // Crée un nouvel élément div
-                        div.textContent = row.Nom + ' ' + row.Prenom; // Définit le contenu textuel de l'élément div
-                        // Ajoute un écouteur d'événements à l'élément div
-                        div.addEventListener('click', function() {
-                            // Met à jour la valeur de l'élément d'entrée avec le nom et le prénom de l'étudiant
-                            document.querySelector('#name').value = row.Nom;
-                            document.querySelector('#firstName').value = row.Prenom;
-                            document.querySelector('#email').value = row.Promo;
-                            document.querySelector('#skills').value = row.Skills;
-                            // Met à jour la table avec les données de l'étudiant
-                            updateTable([row]);
+                        // Ajoute les nouvelles suggestions
+                        data.forEach(row => {
+                            console.log(row);
+                            var div = document.createElement('div'); // Crée un nouvel élément div
+                            div.textContent = row.Nom + ' ' + row.Prenom; // Définit le contenu textuel de l'élément div
+                            // Ajoute un écouteur d'événements à l'élément div
+                            div.addEventListener('click', function() {
+                                nameInput.value = row.Nom + ' ' + row.Prenom;
+                                nameInput.setAttribute('data-id', row.idStudent); // Définit l'attribut data-id de l'élément d'entrée
+
+                                // Met à jour la valeur de l'élément d'entrée avec le nom et le prénom de l'étudiant
+                                document.querySelector('#name') ? document.querySelector('#name').value = row.Nom : null;
+                                document.querySelector('#firstName') ? document.querySelector('#firstName').value = row.Prenom : null;
+                                document.querySelector('#promo') ? document.querySelector('#promo').value = row.Promo : null;
+                                document.querySelector('#skills') ? document.querySelector('#skills').value = row.Skills : null;
+                                // Met à jour la table avec les données de l'étudiant
+                                updateTable([row]);
+                            });
+                            // Ajoute l'élément div aux suggestions
+                            suggestions.appendChild(div);
                         });
-                        // Ajoute l'élément div aux suggestions
-                        suggestions.appendChild(div);
-                    });
 
-                    // Met à jour la table avec les données des étudiants correspondant à la recherche
-                    updateTable(data);
+                        // Met à jour la table avec les données des étudiants correspondant à la recherche
+                        updateTable(data);
+                    }
                 })
                 .catch(error => {
                     console.error('Error fetching search results:', error);
@@ -97,3 +107,141 @@ if (nameInput) {
         }
     });
 }
+
+
+var editForm = document.querySelector('#edit-form');
+document.addEventListener('DOMContentLoaded', (event) => {
+    
+    if (editForm) {
+
+        editForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Empêche le formulaire d'être soumis normalement
+
+            // Récupère les valeurs des champs d'entrée
+            var name = document.querySelector('#name').value;
+            var firstName = document.querySelector('#firstName').value;
+            var promo = document.querySelector('#promo').value;
+            var skills = document.querySelector('#skills').value;
+
+            // Envoie les données à update_student.php
+            fetch('update_student.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    'name': name,
+                    'firstName': firstName,
+                    'promo': promo,
+                    'skills': skills,
+                }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Affiche le message de réponse
+                alert(data);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    }
+});
+
+
+// Sélectionne le formulaire
+var form = document.querySelector('#edit-team');
+
+form.addEventListener('submit', function(e) {
+    e.preventDefault(); // Empêche le comportement par défaut du formulaire
+
+    // Crée un nouvel objet FormData à partir du formulaire
+    var formData = new FormData(form);
+
+    // Envoie une requête POST au serveur avec les données du formulaire
+    fetch('create_team.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json()) // Convertit la réponse en JSON
+    .then(data => {
+        // Gère la réponse du serveur
+        if (data.status === 'success') {
+            alert(data.message); // Affiche le message de succès
+        } else {
+            alert(data.message); // Affiche le message d'erreur
+        }
+    })
+    .catch(error => {
+        // Gère les erreurs
+        console.error('Error:', error);
+    });
+});
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var form = document.querySelector('#editForm1');
+
+    function handleSubmit(e) {
+        e.preventDefault(); // Empêche le comportement par défaut du formulaire
+
+
+        IdEquipe = document.querySelector('input[name=IdEquipe]').value
+        IdEtudiant = document.querySelector('input[name=NomEtudiant]').getAttribute('data-id')
+
+
+        // Envoie une requête POST au serveur avec les données du formulaire
+        fetch('add_student_to_team.php', {
+            method: 'POST',
+            body: JSON.stringify({
+                'IdEquipe': IdEquipe,
+                'IdEtudiant': IdEtudiant
+            })
+        })
+        .then(response => response.json()) // Convertit la réponse en JSON
+        .then(data => {
+            // Gère la réponse du serveur
+            if (data.status === 'success') {
+                alert(data.message); // Affiche le message de succès
+            } else {
+                alert(data.message); // Affiche le message d'erreur
+            }
+        })
+        .catch(error => {
+            // Gère les erreurs
+            console.error('Error:', error);
+        });
+    }
+
+    if (form) {
+        form.addEventListener('submit', handleSubmit);
+    }
+
+    // Sélectionne le corps du tableau
+    var tbody = document.querySelector('#teamsTable tbody');
+
+    // Récupère les données de la table teams
+    fetch('insert_student.php')
+    .then(response => response.json()) // Convertit la réponse en JSON
+    .then(teams => {
+        // Parcourt chaque équipe
+        teams.forEach(team => {
+            // Crée une nouvelle ligne pour l'équipe
+            var row = document.createElement('tr');
+
+            // Ajoute une cellule pour chaque propriété de l'équipe
+            for (var property in team) {
+                var cell = document.createElement('td');
+                cell.textContent = team[property];
+                row.appendChild(cell);
+            }
+
+            // Ajoute la ligne au corps du tableau
+            tbody.appendChild(row);
+        });
+    })
+    .catch(error => {
+        // Gère les erreurs
+        console.error('Error:', error);
+    });
+});

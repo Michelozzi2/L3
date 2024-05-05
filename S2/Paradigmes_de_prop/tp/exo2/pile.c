@@ -35,7 +35,7 @@ void push(Stack* stack, int value) {
 int peek(Stack* stack) {
     if (is_empty(stack)) {
         fprintf(stderr, "Stack is empty\n");
-        exit(EXIT_FAILURE);  // or return some default value
+        exit(EXIT_FAILURE);  // retourne une valeur par défaut
     }
     return stack->top->value;
 }

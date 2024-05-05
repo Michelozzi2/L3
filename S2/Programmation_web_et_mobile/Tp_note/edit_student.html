@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="bdd.js" async="false"></script>
+    <script src="bdd.js" defer></script>
     <title>Hackathon</title>
 </head>
 
@@ -27,6 +27,9 @@
             </a>
             <a class="navbar-item" href="edit_student.html">
                 Modifier élève
+            </a>
+            <a class="navbar-item" href="edit_team.html">
+                Mon équipe
             </a>
         </div>
     </nav>
@@ -52,7 +55,7 @@
             <div class="field ml-5">
                 <label class="label">Promo</label>
                 <div class="control input-short">
-                    <input class="input" type="email" placeholder="Promo" id="email">
+                    <input class="input" type="text" placeholder="Promo" id="promo">
                 </div>
             </div>
             
@@ -66,14 +69,14 @@
 
         <div class="column">
             <div class="columns is-mobile mt-1 mx-2">
-                <form action="bdd.php" method="post" enctype="multipart/form-data" class="field">
+                <form id="edit-form" method="post" enctype="multipart/form-data" class="field">
                     <div class="columns">
                         <div class="column is-11">
                             <input class="input is-normal" type="text" placeholder="Entrez un nom" id="nameInput">
                             <div id="suggestions" class="suggestions"></div>
                         </div>
                         <div class="column is-1">
-                            <button class="button is-outlined mt-1 " type="submit" name="submit">Modifier</button>
+                            <button class="button is-outlined  " type="submit" name="submit">Modifier</button>
                         </div>
                     </div>
                 </form>

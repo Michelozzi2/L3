@@ -22,14 +22,4 @@ maillon_int* load_liste();
 
 
 
-
-
-
-
-
-
-
-
-
-
 #endif

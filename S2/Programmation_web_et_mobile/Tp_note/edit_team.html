@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="Content-language" content="french">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="Hackathon">
+    <meta name="keywords" content="Interface gestion hackathon">
+    <meta name="Author" content="Michelozzi Matthieu">
+    <meta http-equiv="Reply-to" content="michelozzimatthieu@gmail.com">
+    <meta name="Rating" content="General">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="bdd.js" defer></script>
+    <title>Hackathon</title>
+</head>
+
+<body>
+    <nav class="navbar is-dark">
+        <div class="navbar-brand">
+            <a class="navbar-item" id="titre" href="index.html">
+                Données éleves
+            </a>
+            <a class="navbar-item" href="edit_student.html">
+                Modifier élève
+            </a>
+            <a class="navbar-item" href="edit_team.html">
+                Mon équipe
+            </a>
+        </div>
+    </nav>
+
+    <h1 class="title is-1 has-text-centered mt-2">Toutes les équipes</h1>
+
+    <div class="column">
+        <div class="columns is-mobile mt-1 mx-2 is-centered">
+            <form id="edit-team" method="post" enctype="multipart/form-data" class="field">
+                <div class="columns">
+                    <div class="column is-11">
+                        <input class="input is-normal" type="text" placeholder="Entrez un nom" id="Input" name="NomEquipe">
+                    </div>
+                    <div class="column is-1">
+                        <button class="button is-outlined" type="submit" name="submit">Créer équipe</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="column">
+        <div class="columns is-mobile mt-6 mx-2 is-centered">
+            <form id="editForm1" method="post" enctype="multipart/form-data" class="field">
+                <div class="columns">
+                    <div class="column is-11">
+                        <input class="input is-normal" type="text" placeholder="Entrez Id de l'équipe" id="Input" name="IdEquipe">
+                        <input class="input is-normal mt-2" type="text" placeholder="Entrez un nom d'étudiant" id="nameInput" name="NomEtudiant">
+                        <div id="suggestions" class="suggestions"></div>
+                    </div>
+                    <div class="column is-1">
+                        <button class="button is-outlined" type="submit" name="submit">Ajouter</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table is-fullwidth mt-6" id="teamsTable">
+            <thead>
+                <tr>
+                    <th>IdEquipe</th>
+                    <th>NomEquipe</th>
+                    <th>Etudiants</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+</body>
